@@ -30,7 +30,6 @@
             color: #000;
             padding-top: 30px !important;
             border-top: 1px solid #ddd;
-            margin-top: 130px;
         }
 
         .footer a {
@@ -50,6 +49,59 @@
             font-weight: bold;
         }
 
+        .sidebar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 250px;
+            background-color: #dee2e6;
+            border-right: 1px solid #dee2e6;
+            padding-top: 20px;
+            z-index: 1000;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .main-content .nav-tabs {
+            flex-direction: column;
+            border-bottom: none;
+        }
+
+        .main-content .nav-link {
+            color: #333;
+            padding: 15px 20px;
+            border-radius: 0;
+            margin-bottom: 2px;
+            background-color: transparent;
+            border: none;
+            border-right: 3px solid transparent;
+            display: flex;
+            align-items: center;
+        }
+
+        .main-content .nav-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .main-content .nav-link:hover,
+        .main-content .nav-link:focus {
+            background-color: #e9ecef;
+        }
+
+        .main-content .nav-link.active {
+            font-weight: bold;
+        }
+
+        .main-content {
+            margin: 2% 20%;
+            width: 60%;
+            padding: 1%;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+        }
+
         @media (min-width:1024px) {
             #mid-header {
                 margin: 0% 10%;
@@ -57,11 +109,6 @@
             }
 
             #top-header {
-                margin: 0% 10%;
-                width: 80%;
-            }
-
-            .main-content {
                 margin: 0% 10%;
                 width: 80%;
             }
@@ -116,26 +163,47 @@
     </nav>
 
     <!-- Main Content -->
-    <div class="container-fluid main-content mt-5">
-        <h2>Appointment Tracking</h2>
-        <div class="table-responsive appointment-table">
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>#</th> <!-- New column for index -->
-                        <th>Booking ID</th>
-                        <th>Service Type</th>
-                        <th>Service Method</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Address</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="appointmentTableBody">
-                    <!-- Appointments will be populated here via JavaScript -->
-                </tbody>
-            </table>
+    <div class="container-fluid main-content">
+        <div class="row py-4">
+            <div class="col-3" id="sidebar">
+                <h4 class="text-center mb-4"> </h4>
+                <div class="nav flex-column nav-tabs" id="adminTabs" role="tablist">
+                    <a class="nav-link" href="./profile.html" role="tab">
+                        <i class="fa-solid fa-user-tie"></i></i> User Profile
+                    </a>
+                    <a class="nav-link " href="./address.html" role="tab">
+                        <i class="fa-solid fa-map-location-dot"></i> User Address
+                    </a>
+                    <a class="nav-link" href="./order_tracking.html" role="tab">
+                        <i class="fas fa-box"></i> Order Tracking
+                    </a>
+                    <a class="nav-link active" href="./appointment_tracking.html" role="tab">
+                        <i class="fas fa-calendar"></i> Appointment Tracking
+                    </a>
+                </div>
+            </div>
+            <div class="col">
+                <h2>Appointment Tracking</h2>
+                <div class="table-responsive appointment-table">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th> <!-- New column for index -->
+                                <th>Booking ID</th>
+                                <th>Service Type</th>
+                                <th>Service Method</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Address</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="appointmentTableBody">
+                            <!-- Appointments will be populated here via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -280,8 +348,8 @@
                         <td>${appointment.booking_id}</td>
                         <td>${serviceTypes[appointment.service_type_id] || 'Unknown'}</td>
                         <td>${serviceMethods[appointment.service_method_id] || 'Unknown'}</td>
-                        <td>${appointment.booking_date}</td>
-                        <td>${appointment.booking_time.replace(':00', '')}</td>
+                        <td style="width:11.5%;">${appointment.booking_date}</td>
+                        <td style="width:8%;">${appointment.booking_time.replace(':00', '')}</td>
                         <td>${appointment.book_address_1} ${appointment.book_address_2 ? ', ' + appointment.book_address_2 : ''}, ${appointment.book_city}, ${appointment.book_state}, ${appointment.book_country}</td>
                         <td>
                             <button class="btn btn-danger btn-sm cancel-btn" data-id="${appointment.booking_id}">Cancel</button>

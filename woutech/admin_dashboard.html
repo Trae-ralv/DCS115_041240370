@@ -21,7 +21,7 @@
             bottom: 0;
             left: 0;
             width: 250px;
-            background-color: #f8f9fa;
+            background-color: #dee2e6;
             border-right: 1px solid #dee2e6;
             padding-top: 20px;
             z-index: 1000;
@@ -139,7 +139,10 @@
             font-weight: bold;
         }
 
-        #orderList, #bookingList{
+        #userList,
+        #productList,
+        #orderList,
+        #bookingList {
             width: max-content;
         }
 
@@ -261,7 +264,9 @@
                                                 class="fa-solid fa-user-plus"></i></a>
                                     </div>
                                 </div>
-                                <div id="userList"></div>
+                                <div class="overflow-content">
+                                    <div id="userList"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -271,7 +276,9 @@
             <!-- Product Management Tab -->
             <div class="tab-pane fade" id="products-content" role="tabpanel">
                 <h1 class="text-center mb-4"><i class="fas fa-box"></i> Product Management</h1>
-                <div id="productList"></div> <!-- Placeholder for product list -->
+                <div class="overflow-content">
+                    <div id="productList"></div> <!-- Placeholder for product list -->
+                </div>
             </div>
 
             <!-- Order Management Tab -->

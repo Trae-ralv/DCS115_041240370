@@ -39,14 +39,61 @@
             color: inherit;
         }
 
+        #profile-container {
+            margin: 2% 20% !important;
+            width: 60%;
+            padding: 1%;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 250px;
+            background-color: #dee2e6;
+            border-right: 1px solid #dee2e6;
+            padding-top: 20px;
+            z-index: 1000;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        #profile-container .nav-tabs {
+            flex-direction: column;
+            border-bottom: none;
+        }
+
+        #profile-container .nav-link {
+            color: #333;
+            padding: 15px 20px;
+            border-radius: 0;
+            margin-bottom: 2px;
+            border: none;
+            border-right: 3px solid transparent;
+            display: flex;
+            align-items: center;
+        }
+
+        #profile-container .nav-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        #profile-container .nav-link:hover,
+        #profile-container .nav-link:focus {
+            background-color: #e9ecef;
+        }
+
+        #profile-container .nav-link.active {
+            font-weight: bold;
+            border-color: var(--bs-nav-tabs-link-active-border-color);
+        }
+
         @media (min-width:1024px) {
-            #profile-container {
-                margin: 2% 35% !important;
-                width: 30%;
-                padding: 1%;
-                border: 1px solid #ccc;
-                border-radius: 20px;
-            }
+
 
             #mid-header {
                 margin: 0% 10%;
@@ -107,23 +154,47 @@
             </div>
         </div>
     </nav>
-    
+
     <div class="container mt-5" id="profile-container">
-        <div class="row justify-content-between">
-            <div class="col-4">
-                <h2>Profile Info</h2>
+        <div class="row py-4">
+            <div class="col-3" id="sidebar">
+                <h4 class="text-center mb-4"> </h4>
+                <div class="nav flex-column nav-tabs" id="adminTabs" role="tablist">
+                    <a class="nav-link active"  href="./profile.html" role="tab">
+                        <i class="fa-solid fa-user-tie"></i></i> User Profile
+                    </a>
+                    <a class="nav-link"  href="./address.html" role="tab">
+                        <i class="fa-solid fa-map-location-dot"></i> User Address
+                    </a>
+                    <a class="nav-link"  href="./order_tracking.html" role="tab">
+                        <i class="fas fa-box"></i> Order Tracking
+                    </a>
+                    <a class="nav-link"  href="./appointment_tracking.html" role="tab">
+                        <i class="fas fa-calendar"></i> Appointment Tracking
+                    </a>
+                </div>
             </div>
-            <div class="col-1">
-                <h3><i class="fa-solid fa-pen-to-square edit-icon" style="cursor: pointer;"></i></h3>
+            <div class="col-1"></div>
+            <div class="col">
+                <div class="row justify-content-between">
+                    <div class="col-6">
+                        <h2>Profile Info</h2>
+                    </div>
+                    <div class="col-1">
+                        <h3><i class="fa-solid fa-pen-to-square edit-icon" style="cursor: pointer;"></i></h3>
+                    </div>
+                </div>
+                <form id="profile-form">
+                    <div id="profile-fields"></div>
+                    <div class="profile-buttons">
+                        <button type="submit" class="btn btn-primary" id="profile-button">Save Changes</button>
+                        <button type="button" class="btn btn-secondary cancel-button"
+                            id="profile-button">Cancel</button>
+                    </div>
+                </form>
             </div>
+            <div class="col-3"></div>
         </div>
-        <form id="profile-form">
-            <div id="profile-fields"></div>
-            <div class="profile-buttons">
-                <button type="submit" class="btn btn-primary" id="profile-button">Save Changes</button>
-                <button type="button" class="btn btn-secondary cancel-button" id="profile-button">Cancel</button>
-            </div>
-        </form>
     </div>
 
     <footer class="footer py-4 bg-body-secondary">
@@ -211,7 +282,7 @@
                                 <li><a class="dropdown-item" href="./profile.html">Profile Info</a></li>
                                 <li><a class="dropdown-item" href="./address.html">Address</a></li>
                                 <li><a class="dropdown-item" href="./order_tracking.html">Order Tracking</a></li>
-                                <li><a class="dropdown-item" href./appointment_tracking.html">Appointment Tracking</a></li>
+                                <li><a class="dropdown-item" href="./appointment_tracking.html">Appointment Tracking</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="#" id="logout-btn">Log Out</a></li>
                             </ul>

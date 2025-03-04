@@ -1,22 +1,6 @@
 <?php
 header('Content-Type: application/json');
 
-// Enable error reporting for debugging
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-// Log errors to a file for debugging (optional, remove in production)
-ini_set('log_errors', 1);
-$logFile = dirname(__FILE__) . '/error.log';
-ini_set('error_log', $logFile);
-
-// Check if log file is writable
-if (!is_writable(dirname($logFile))) {
-    error_log("Error log directory is not writable");
-    die(json_encode(['success' => false, 'message' => 'Server configuration error']));
-}
-
 // Database connection
 $servername = "localhost";
 $username = "root";
