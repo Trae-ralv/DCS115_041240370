@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        body {
+            background-image: url(./images/service.webp);
+            background-size: cover;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        }
+
+        .hover-bg-body-secondary:hover {
+            background-color: #dee2e6 !important;
+        }
+
+        .hover-bg-body-secondary {
+            transition: background-color 0.3s ease;
+        }
+
+        .def-text-color {
+            color: #343a40;
+        }
+
+        .footer {
+            color: #000;
+            padding-top: 30px !important;
+        }
+
+        .footer a {
+            color: inherit;
+        }
+
+        .service-card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #fff;
+            margin: 20px 10px;
+        }
+
+        .service-card h4 {
+            text-align: center;
+            padding: 8px;
+            background-color: #ffffffc3;
+            border-radius: 8px;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .methods-list {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+
+        .book-appointment-btn {
+            display: block;
+            margin: 2% 0 4% 80%;
+            width: 20%;
+            padding: 5px 0;
+            font-size: 14px;
+        }
+
+        #e-waste-card{
+            background-image: url(./images/e-waste_recycling.webp);
+            background-size: cover;
+        }
+
+        #pc-card{
+            background-image: url(./images/pc_customization.webp);
+            background-size: cover;
+        }
+
+        #network-card{
+            background-image: url(./images/networking.webp);
+            background-size: cover;
+        }
+
+        .main-content {
+                margin: 1% 15%;
+                width: 70%;
+                border: 1px solid #cccccc;
+                border-radius: 12px;
+                background-color: #f8f9facd !important;
+                padding: 0 2%;
+            }
+
+        @media (min-width:1024px) {
+            #mid-header {
+                margin: 0% 10%;
+                width: 80%;
+            }
+
+            #top-header {
+                margin: 0% 10%;
+                width: 80%;
+            }
+
+
+            .footer {
+                padding-left: 200px;
+                padding-right: 200px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <nav class="navbar bg-black">
+        <form class="container-fluid justify-content-end" id="top-header">
+        </form>
+    </nav>
+    <nav class="navbar navbar-expand-lg bg-body-secondary py-0">
+        <div class="container-fluid" id="mid-header">
+            <a class="navbar-brand justify-content-center" href="./index.html">
+                <img src="./images/logo.webp" alt="Logo" width="40" height="40"
+                    class="d-inline-block align-items-center me-3">
+                <a class="me-5 text-decoration-none fs-4 def-text-color" href="./index.html"><strong>WOU
+                        Tech</strong></a>
+            </a>
+            <button class="navbar-toggler border-0 bg-transparent" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="true"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-3 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height:full;">
+                    <li class="nav-item">
+                        <button type="button" class="py-3 px-3 border-0 bg-transparent hover-bg-body-secondary">
+                            <a class="nav-link" href="#"><strong>About Us</strong></a>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="py-3 px-3 border-0 bg-transparent hover-bg-body-secondary">
+                            <a class="nav-link" href="./product.html"><strong>Product</strong></a>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="py-3 px-3 border-0 bg-transparent hover-bg-body-secondary">
+                            <a class="nav-link" href="./service.html"><strong>Services</strong></a>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid main-content">
+        <h2 class="mt-5">Service We Provide</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="service-card" id="e-waste-card">
+                    <h4 class=>E-Waste Recycling</h4>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="service-card"  id="pc-card">
+                    <h4>PC Customization</h4>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="service-card" id="network-card">
+                    <h4>Networking Services</h4>
+                </div>
+            </div>
+        </div>
+
+        <h4 class="mt-5">Methods</h4>
+        <ul class="methods-list">
+            <li>On-site Servicing</li>
+            <li>In-house Servicing</li>
+            <li>Remote Servicing (only for technical issues, No Appointment Needed)</li>
+        </ul>
+        <div class="container-fluid d-flex">
+            <a href="./booking_appointment.html" class="btn btn-primary book-appointment-btn">Book an Appointment</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer py-4 bg-body-secondary">
+        <div class="container">
+            <div class="row ms-5">
+                <!-- Contact Section -->
+                <div class="col-md-4">
+                    <h6 class="fw-bold">Contact</h6>
+                    <p>012 - 3456789<br>013 - 4578991<br>019 - 9867866</p>
+                    <h6 class="fw-bold mt-5">Email</h6>
+                    <p>contact@woutech.help.com</p>
+                </div>
+
+                <!-- Address Section -->
+                <div class="col-md-4">
+                    <h6 class="fw-bold">Address</h6>
+                    <p>7, Gat Lebuh China,<br>Taman Dhoby Ghaut,<br>10300 George Town,<br>Pulau Pinang</p>
+                    <h6 class="fw-bold mt-5">Working Hours</h6>
+                    <p>Weekday: 8 am - 10 pm<br>Weekend: 8 am - 5 pm</p>
+                </div>
+
+                <!-- Social Media & Payment Methods -->
+                <div class="col-md-4">
+                    <h6 class="fw-bold">Follow Us</h6>
+                    <a href="https://www.facebook.com/"><img src="./images/facebook.webp" alt="Facebook" width="35"
+                        class="me-3"></a>
+                <a href="https://www.instagram.com/"><img src="./images/insta.webp" alt="Instagram" width="35"
+                        class="me-3"></a>
+                <a href="https://x.com/?lang=en"><img src="./images/x.webp" alt="X" width="35" class="me-3"></a>
+                <a href="https://www.youtube.com/"><img src="./images/youtube.webp" alt="YouTube" width="40"
+                        class="me-3"></a>
+                    <h6 class="fw-bold mt-4">Payment Methods</h6>
+                    <div class="row">
+                        <div class="col-3 text-center">
+                            <img src="./images/paypal.webp" alt="PayPal" width="70">
+                        </div>
+                        <div class="col-3 text-center">
+                            <img src="./images/visa.webp" alt="Visa" width="70">
+                        </div>
+                        <div class="col-3 text-center">
+                            <img src="./images/mastercard.webp" alt="MasterCard" width="70">
+                        </div>
+                        <div class="col-3 text-center">
+                            <img src="./images/tng.webp" alt="Touch 'n Go" width="60">
+                        </div>
+                        <div class="col-3 text-center">
+                            <img src="./images/grabpay.webp" alt="GrabPay" width="60">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright Section -->
+            <div class="mt-5 text-center">
+                <p>© Copyright 2025 WOU Tech Sdn. Bhd. All Rights Reserved | <a href="#">Privacy Policy</a> | <a
+                        href="#">Terms & Conditions</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Header Script -->
+    <script>
+        function updateHeader() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const typeId = parseInt(localStorage.getItem('type_id')) || 0;
+            const topHeader = document.getElementById('top-header');
+
+            if (isLoggedIn && typeId !== 3) {
+                topHeader.innerHTML = `
+                    <div class="navbar-brand"></div>
+                    <div class="d-flex align-items-center">
+                        <a class="btn btn-link text-white text-decoration-none me-3" type="button" id="cart-btn" href="./cart.html">
+                            <i class="fa-solid fa-cart-shopping"></i> Cart
+                        </a>
+                        <div class="dropdown">
+                            <button class="btn btn-link text-white text-decoration-none dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-user"></i> Profile
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                                <li><a class="dropdown-item" href="./profile.html">Profile Info</a></li>
+                                <li><a class="dropdown-item" href="./address.html">Address</a></li>
+                                <li><a class="dropdown-item" href="./order_tracking.html">Order Tracking</a></li>
+                                <li><a class="dropdown-item" href="./appointment_tracking.html">Appointment Tracking</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#" id="logout-btn">Log Out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('logout-btn').addEventListener('click', function (e) {
+                    e.preventDefault();
+                    localStorage.clear();
+                    updateHeader(); // Reset header to logged-out state
+                    window.location.href = 'index.html';
+                });
+            } else {
+                topHeader.innerHTML = `
+                    <button class="btn btn-link me-2 text-white text-decoration-none" type="button" onclick="window.location.href='login.html'">Login</button>
+                    <button class="btn btn-link text-white text-decoration-none" type="button" onclick="window.location.href='register.html'">Register</button>
+                `;
+            }
+        }
+
+        // Update header on page load
+        updateHeader();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

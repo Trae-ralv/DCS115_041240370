@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Chart.js for Pie Charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* Side Tab Navigation */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 250px;
+            background-color: #f8f9fa;
+            border-right: 1px solid #dee2e6;
+            padding-top: 20px;
+            z-index: 1000;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .nav-tabs {
+            flex-direction: column;
+            border-bottom: none;
+        }
+
+        .nav-link {
+            color: #333;
+            padding: 15px 20px;
+            border-radius: 0;
+            margin-bottom: 2px;
+            background-color: transparent;
+            border: none;
+            border-right: 3px solid transparent;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .nav-link:hover,
+        .nav-link:focus {
+            background-color: #e9ecef;
+            border-right-color: #007bff;
+        }
+
+        .nav-link.active {
+            background-color: #007bff;
+            color: white !important;
+            border-right-color: #0056b3;
+            font-weight: bold;
+        }
+
+        /* Main Content */
+        .content {
+            margin-left: 250px;
+            padding: 30px;
+            transition: margin-left 0.3s ease-in-out;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        .tab-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Chart and Cards */
+        .chart-container {
+            width: 100%;
+            height: 400px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .card-title i {
+            margin-right: 10px;
+        }
+
+        /* Table Styling */
+        .data-table {
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 0.75rem;
+            text-align: left;
+            vertical-align: middle;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .data-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+
+        .data-table .text-end {
+            text-align: right;
+        }
+
+        .nav-link.active {
+            background-color: #007bff;
+            color: #333 !important;
+            border-right-color: #0056b3;
+            font-weight: bold;
+        }
+
+        #orderList, #bookingList{
+            width: max-content;
+        }
+
+        .overflow-content {
+            overflow-x: scroll;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-250px);
+            }
+
+            .content {
+                margin-left: 0;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar (Side Tabs) -->
+    <div class="sidebar" id="sidebar">
+        <h4 class="text-center mb-4"><i class="fas fa-cogs"></i> Admin Panel</h4>
+        <div class="nav flex-column nav-tabs" id="adminTabs" role="tablist">
+            <a class="nav-link active" id="dashboard-tab" data-bs-toggle="tab" data-bs-target="#dashboard-content"
+                href="#" role="tab">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </a>
+            <a class="nav-link" id="users-tab" data-bs-toggle="tab" data-bs-target="#users-content" href="#" role="tab">
+                <i class="fas fa-users"></i> User Management
+            </a>
+            <a class="nav-link" id="products-tab" data-bs-toggle="tab" data-bs-target="#products-content" href="#"
+                role="tab">
+                <i class="fas fa-box"></i> Product Management
+            </a>
+            <a class="nav-link" id="orders-tab" data-bs-toggle="tab" data-bs-target="#orders-content" href="#"
+                role="tab">
+                <i class="fas fa-shopping-cart"></i> Order Management
+            </a>
+            <a class="nav-link" id="bookings-tab" data-bs-toggle="tab" data-bs-target="#bookings-content" href="#"
+                role="tab">
+                <i class="fas fa-calendar"></i> Booking Management
+            </a>
+            <a class="nav-link text-danger" id="logout-tab" href="#" role="tab">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content with Tab Content -->
+    <div class="content">
+        <div class="tab-content" id="adminTabContent">
+            <!-- Dashboard Tab -->
+            <div class="tab-pane fade show active" id="dashboard-content" role="tabpanel">
+                <h1 class="text-center mb-4"><i class="fas fa-tachometer-alt"></i> Admin Dashboard</h1>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-chart-pie"></i> Product Distribution</h5>
+                                <div class="chart-container">
+                                    <canvas id="productChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-spinner"></i> Processing Orders</h5>
+                                <p id="processingOrders" class="lead"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-truck"></i> Latest Order Tracking</h5>
+                                <div id="latestOrders"></div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-calendar-check"></i> Today's and Upcoming
+                                    Bookings</h5>
+                                <div id="bookings"></div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-users"></i> Latest Registered Users</h5>
+                                <div id="latestUsers"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Management Tab -->
+            <div class="tab-pane fade" id="users-content" role="tabpanel">
+                <h1 class="text-center mb-4"><i class="fas fa-users"></i> User Management</h1>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h5 class="card-title"><i class="fas fa-users"></i> User List</h5>
+                                    </div>
+                                    <div class="col text-end">
+                                        <a type="button" class="btn btn-light" id="openAddUserModal"><i
+                                                class="fa-solid fa-user-plus"></i></a>
+                                    </div>
+                                </div>
+                                <div id="userList"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Management Tab -->
+            <div class="tab-pane fade" id="products-content" role="tabpanel">
+                <h1 class="text-center mb-4"><i class="fas fa-box"></i> Product Management</h1>
+                <div id="productList"></div> <!-- Placeholder for product list -->
+            </div>
+
+            <!-- Order Management Tab -->
+            <div class="tab-pane fade" id="orders-content" role="tabpanel">
+                <h1 class="text-center mb-4"><i class="fas fa-shopping-cart"></i> Order Management</h1>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <h5 class="card-title"><i class="fas fa-shopping-cart"></i> Order List</h5>
+                    </div>
+                </div>
+                <div class="overflow-content">
+                    <div id="orderList"></div> <!-- Placeholder for order list -->
+                </div>
+            </div>
+
+            <!-- Booking Management Tab -->
+            <div class="tab-pane fade" id="bookings-content" role="tabpanel">
+                <h1 class="text-center mb-4"><i class="fas fa-calendar"></i> Booking Management</h1>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <h5 class="card-title"><i class="fas fa-calendar-check"></i> Booking List</h5>
+                    </div>
+                </div>
+                <div class="overflow-content">
+                    <div id="bookingList"></div> <!-- Placeholder for booking list -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script>
+        // User Management Functions
+        function fetchUsers() {
+            $.ajax({
+                url: './php/profile_fetch_all.php',
+                method: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    console.log('Fetch Users Success:', response);
+                    if (response.success && response.data && response.data.length > 0) {
+                        renderTable('userList', response.data, '', {
+                            user_id: 'ID',
+                            user_name: 'User Name',
+                            phone_no: 'Phone Number',
+                            email: 'Email',
+                            password: 'Password',
+                            type_id: 'Type',
+                            company_name: 'Company Name',
+                            verification_code: 'Verification Code',
+                            is_verified: 'Verified',
+                            created_at: 'Created At'
+                        });
+                        attachUserActions();
+                    } else {
+                        $('#userList').html('<p>No users found</p>');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log('Fetch Users Error:', { error, status, response: xhr.responseText });
+                    $('#userList').html('<p>Error loading users</p>');
+                }
+            });
+        }
+
+
+        function fetchBookings() {
+            $.ajax({
+                url: './php/booking_fetch_all.php', // Assuming this PHP file will be created
+                method: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    console.log('Fetch Bookings Success:', response);
+                    if (response.success && response.bookings && response.bookings.length > 0) {
+                        renderTable('bookingList', response.bookings, 'Booking List', {
+                            booking_id: 'ID',
+                            user_name: 'Username',
+                            service_type_id: 'Service Type',
+                            service_method_id: 'Service Method',
+                            booking_date: 'Date',
+                            booking_time: 'Time',
+                            book_address_1: 'Address 1',
+                            book_address_2: 'Address 2',
+                            book_postal_code: 'Postal Code',
+                            book_city: 'City',
+                            book_state: 'State',
+                            book_country: 'Country',
+                            book_description: 'Description'
+                        });
+                    } else {
+                        $('#bookingList').html('<p>No bookings found</p>');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log('Fetch Bookings Error:', { error, status, response: xhr.responseText });
+                    $('#bookingList').html('<p>Error loading bookings</p>');
+                }
+            });
+        }
+
+        function attachUserActions() {
+            $('.edit-user').off('click').on('click', function () {
+                const userId = $(this).data('user-id');
+                fetchUserDetails(userId);
+            });
+
+            $('.delete-user').off('click').on('click', function () {
+                const userId = $(this).data('user-id');
+                if (confirm('Are you sure you want to delete this user?')) {
+                    deleteUser(userId);
+                }
+            });
+        }
+
+        function fetchUserDetails(userId) {
+            $.ajax({
+                url: './php/profile_fetch.php',
+                method: 'GET',
+                dataType: 'json',
+                data: { user_id: userId },
+                success: function (response) {
+                    console.log('Fetch User Details Success:', response);
+                    if (response) {
+                        $('#editUserModal').remove();
+                        const modalHtml = `
+                            <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="editUserForm">
+                                                <input type="hidden" name="user_id" value="${userId}">
+                                                <div class="mb-3">
+                                                    <label class="form-label">User Name</label>
+                                                    <input type="text" class="form-control" name="user_name" value="${response.user_name || ''}" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Email</label>
+                                                    <input type="email" class="form-control" name="email" value="${response.email || ''}" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Password</label>
+                                                    <input type="password" class="form-control" name="password" value="${response.password || ''}" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Phone Number</label>
+                                                    <input type="text" class="form-control" name="phone_no" value="${response.phone_no || ''}" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Type</label>
+                                                    <select class="form-control" name="type_id" required>
+                                                        <option value="1" ${response.type_id == 1 ? 'selected' : ''}>Regular User</option>
+                                                        <option value="2" ${response.type_id == 2 ? 'selected' : ''}>Company User</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3 company-field" style="display: ${response.type_id == 2 ? 'block' : 'none'};">
+                                                    <label class="form-label">Company Name</label>
+                                                    <input type="text" class="form-control" name="company_name" value="${response.company_name || ''}">
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        $('body').append(modalHtml);
+                        const modal = new bootstrap.Modal(document.getElementById('editUserModal'));
+                        modal.show();
+                        $('#editUserForm').on('submit', function (e) {
+                            e.preventDefault();
+                            updateUser();
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log('Fetch User Details Error:', { error, status, response: xhr.responseText });
+                }
+            });
+        }
+
+        function updateUser() {
+            const formData = $('#editUserForm').serialize();
+            $.ajax({
+                url: './php/profile_update.php',
+                method: 'POST',
+                data: formData,
+                dataType: 'json',
+                success: function (response) {
+                    console.log('Update User Success:', response);
+                    if (response.success) {
+                        alert('User updated successfully');
+                        $('#editUserModal').modal('hide');
+                        fetchUsers();
+                    } else {
+                        alert('Update failed: ' + (response.message || 'Unknown error'));
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log('Update User Error:', { error, status, response: xhr.responseText });
+                    alert('Error updating user');
+                }
+            });
+        }
+
+        function deleteUser(userId) {
+            $.ajax({
+                url: './php/profile_delete.php',
+                method: 'POST',
+                data: { user_id: userId },
+                dataType: 'json',
+                success: function (response) {
+                    console.log('Delete User Success:', response);
+                    if (response.success) {
+                        alert('User deleted successfully');
+                        fetchUsers();
+                    } else {
+                        alert('Delete failed: ' + (response.message || 'Unknown error'));
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log('Delete User Error:', { error, status, response: xhr.responseText });
+                    alert('Error deleting user');
+                }
+            });
+        }
+
+        function addUser() {
+            const formData = $('#addUserForm').serialize();
+            $.ajax({
+                url: './php/profile_add.php',
+                method: 'POST',
+                data: formData,
+                dataType: 'json',
+                success: function (response) {
+                    console.log('Add User Success:', response);
+                    if (response.success) {
+                        alert('User added successfully');
+                        $('#addUserModal').modal('hide');
+                        fetchUsers();
+                    } else {
+                        alert('Add failed: ' + (response.message || 'Unknown error'));
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log('Add User Error:', { error, status, response: xhr.responseText });
+                    alert('Error adding user');
+                }
+            });
+        }
+
+        // Modified renderTable to conditionally show action buttons
+        function renderTable(elementId, data, title, customHeaders = {}, editableFields = {}) {
+            const container = $(`#${elementId}`).empty();
+            if (data && data.length) {
+                let table = $('<table>').addClass('data-table table table-striped table-hover');
+                let thead = $('<thead>');
+                let tbody = $('<tbody>');
+
+                let headerRow = $('<tr>');
+                const headers = Object.keys(data[0]);
+                headers.forEach(header => {
+                    const displayHeader = customHeaders[header] || header.replace(/_/g, ' ');
+                    headerRow.append($('<th>').text(displayHeader));
+                });
+                if (['userList', 'productList'].includes(elementId)) {
+                    headerRow.append($('<th>').text('Actions'));
+                }
+                thead.append(headerRow);
+
+                data.forEach(item => {
+                    let row = $('<tr>').addClass('align-middle');
+                    headers.forEach(header => {
+                        let value = item[header] || 'N/A';
+
+                        if (header === 'total') {
+                            // Format Amount Paid with RM and 2 decimal places
+                            value = 'RM ' + (parseFloat(value) || 0).toFixed(2);
+                        }
+                        if (editableFields[header]) {
+                            // Render dropdown for editable fields like order_status
+                            const cell = $('<td>');
+                            const select = $('<select>').addClass('form-control order-status-select').attr('data-order-id', item.order_id).attr('data-field', header);
+                            select.append($('<option>').val('Received').text('Received').prop('selected', value === 'Received'));
+                            select.append($('<option>').val('Ready').text('Ready').prop('selected', value === 'Ready'));
+                            select.append($('<option>').val('Shipped').text('Shipped').prop('selected', value === 'Shipped'));
+                            select.append($('<option>').val('Processing').text('Processing').prop('selected', value === 'Processing'));
+                            cell.append(select);
+                            row.append(cell);
+                        } else {
+                            row.append($('<td>').text(value));
+                        }
+                    });
+
+                    if (['productList'].includes(elementId)) {
+                        const actionsCell = $('<td>');
+                        actionsCell.append($('<button>').addClass('btn btn-dark btn-sm edit-product').attr('data-product-id', item.product_id).append($('<i>').addClass('fa-solid fa-pen-to-square')));
+                        actionsCell.append(' ');
+                        actionsCell.append($('<button>').addClass('btn btn-danger btn-sm delete-product').attr('data-product-id', item.product_id).append($('<i>').addClass('fa-solid fa-trash')));
+                        row.append(actionsCell);
+                    } else if (['userList'].includes(elementId)) {
+                        const actionsCell = $('<td>');
+                        actionsCell.append($('<button>').addClass('btn btn-dark btn-sm edit-user').attr('data-user-id', item.user_id).append($('<i>').addClass('fa-solid fa-pen-to-square')));
+                        actionsCell.append(' ');
+                        actionsCell.append($('<button>').addClass('btn btn-danger btn-sm delete-user').attr('data-user-id', item.user_id).append($('<i>').addClass('fa-solid fa-trash')));
+                        row.append(actionsCell);
+                    }
+
+                    tbody.append(row);
+                });
+
+                table.append(thead, tbody);
+                container.append($('<h6>').text(title), table);
+
+                // Add event listener for inline status updates
+                $('.order-status-select').on('change', function () {
+                    const orderId = $(this).data('order-id');
+                    const field = $(this).data('field');
+                    const newValue = $(this).val();
+                    updateOrderStatusInline(orderId, field, newValue);
+                });
+
+                // Add event listener for edit button
+                $('.edit-order').off('click').on('click', function () {
+                    const orderId = $(this).data('order-id');
+                    fetchOrderDetails(orderId);
+                });
+            } else {
+                container.append($('<p>').text('No data available'));
+            }
+        }
+
+        // Event listeners for add user form and company field toggle
+        $('#openAddUserModal').on('click', function () {
+            $('#addUserModal').remove();
+            const modalHtml = `
+                <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addUserModalLabel">Add New User</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="addUserForm">
+                                    <div class="mb-3">
+                                        <label class="form-label">User Name</label>
+                                        <input type="text" class="form-control" name="user_name" placeholder="User Name" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="form-control" name="email" placeholder="Email" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Password</label>
+                                        <input type="password" class="form-control" name="password" placeholder="Password" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Phone Number</label>
+                                        <input type="text" class="form-control" name="phone_no" placeholder="Phone Number" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Type</label>
+                                        <select class="form-control" name="type_id" required>
+                                            <option value="1">Regular User</option>
+                                            <option value="2">Company User</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3 company-field" style="display: none;">
+                                        <label class="form-label">Company Name</label>
+                                        <input type="text" class="form-control" name="company_name" placeholder="Company Name">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Add User</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            $('body').append(modalHtml);
+            const modal = new bootstrap.Modal(document.getElementById('addUserModal'));
+            modal.show();
+            $('#addUserForm').on('submit', function (e) {
+                e.preventDefault();
+                const typeId = $('select[name="type_id"]').val();
+                if (typeId === '2' && !$('input[name="company_name"]').val().trim()) {
+                    alert('Company Name is required for Company User');
+                    return;
+                }
+                addUser();
+            });
+            $('select[name="type_id"]').on('change', function () {
+                const typeId = $(this).val();
+                $('.company-field').toggle(typeId === '2');
+            });
+        });
+
+        // Fetch data when the respective tabs are shown
+        $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
+            const target = $(e.target).attr('data-bs-target');
+            if (target === '#dashboard-content') {
+                fetchDashboardData();
+            } else if (target === '#users-content') {
+                fetchUsers();
+            } else if (target === '#products-content') {
+                fetchProducts();
+            } else if (target === '#orders-content') {
+                fetchOrders();
+            } else if (target === '#bookings-content') {
+                fetchBookings();
+            }
+        });
+
+        $(document).ready(function () {
+            // Check if user is logged in
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (!isLoggedIn) {
+                alert('Please log in first.');
+                window.location.href = './login.html';
+            }
+
+            // Fetch dashboard data on page load (for Dashboard tab)
+            fetchDashboardData();
+
+            function fetchDashboardData() {
+                $.ajax({
+                    url: './php/admin_dashboard.php',
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function (response) {
+                        console.log('AJAX Success:', response);
+                        if (response.success) {
+                            if ($('#dashboard-content').hasClass('active')) {
+                                renderPieChart('productChart', response.productData.labels, response.productData.values, 'Distribution by Product');
+                                $('#processingOrders').text(response.processingOrders.total > 0 ?
+                                    `Total Processing Orders: ${response.processingOrders.total}` : 'No products ordered that required process');
+                                renderTable('latestOrders', response.latestOrders, '', {
+                                    order_id: 'ID',
+                                    user_name: 'Username',
+                                    order_pay_at: 'Payment Date',
+                                    total: 'Amount Paid',
+                                    order_status: 'Status',
+                                    order_method: 'Order Method',
+                                    payment_method: 'Payment Method'
+                                });
+
+                                renderTable('bookings', response.bookings, "", {
+                                    user_name: 'Username',
+                                    booking_id: 'ID',
+                                    booking_date: 'Date',
+                                    booking_time: 'Time',
+                                    service_type: 'Service Type',
+                                    service_method: 'Method',
+                                    book_address_1: 'Address',
+                                    book_address_2: ' ',
+                                    book_postal_code: ' ',
+                                    book_city: ' ',
+                                    book_state: ' ',
+                                    book_country: ' '
+                                });
+
+                                renderTable('latestUsers', response.latestUsers, '', {
+                                    user_id: 'ID',
+                                    user_name: 'Username',
+                                    phone_no: 'Phone Number',
+                                    email: 'Email Address',
+                                    created_at: 'Registration Date'
+                                });
+                            }
+                        } else {
+                            alert('Error fetching data: ' + (response.error || 'Unknown error'));
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.log('AJAX Error:', { error, status, response: xhr.responseText });
+                        alert('Error fetching data');
+                    }
+                });
+            }
+
+            function renderPieChart(canvasId, labels, data, title) {
+                const ctx = $(`#${canvasId}`).get(0).getContext('2d');
+                if (window.myChart) window.myChart.destroy();
+                window.myChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: labels && labels.length ? labels : ['No Data'],
+                        datasets: [{
+                            data: data && data.length ? data : [1],
+                            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            title: { display: true, text: title },
+                            legend: { display: true, position: 'right', labels: { boxWidth: 15, padding: 10 } }
+                        }
+                    }
+                });
+            }
+
+            // Logout functionality
+            document.getElementById('logout-tab').addEventListener('click', function (e) {
+                e.preventDefault();
+                localStorage.clear();
+                window.location.href = './index.html';
+            });
+
+            // Toggle sidebar for mobile (optional)
+            $('#sidebarCollapse').on('click', function () {
+                $('.sidebar').toggleClass('active');
+                $('.content').toggleClass('shifted');
+            });
+        });
+    </script>
+    <script>
+        function fetchProducts() {
+            $.ajax({
+                url: './php/product_fetch_all.php',
+                method: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    console.log('Fetch Products Success:', response);
+                    if (response.success && response.data && response.data.length > 0) {
+                        renderTable('productList', response.data, '', {
+                            product_id: 'ID',
+                            product_image: 'Image',
+                            product_name: 'Name',
+                            price: 'Price',
+                            quantity_left: 'Stock',
+                            product_category: 'Category',
+                            operating_system: 'OS',
+                            processor: 'Processor',
+                            graphic_card: 'GPU',
+                            memory: 'Memory',
+                            display_resolution: 'Resolution',
+                            description: 'Description'
+                        });
+                        attachProductActions();
+                    } else {
+                        $('#productList').html('<p>No products found</p>');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log('Fetch Products Error:', { error, status, response: xhr.responseText });
+                    $('#productList').html('<p>Error loading products</p>');
+                }
+            });
+        }
+
+        function attachProductActions() {
+            $('.edit-user').off('click').on('click', function () {
+                const userId = $(this).data('user-id');
+                fetchUserDetails(userId);
+            });
+
+            $('.delete-user').off('click').on('click', function () {
+                const userId = $(this).data('user-id');
+                if (confirm('Are you sure you want to delete this user?')) {
+                    deleteUser(userId);
+                }
+            });
+
+            $('.edit-product').off('click').on('click', function () { // Rename class to 'edit-product' for clarity
+                const productId = $(this).data('product-id'); // Rename to 'product-id'
+                fetchProductDetails(productId);
+            });
+
+            $('.delete-product').off('click').on('click', function () { // Rename class to 'delete-product'
+                const productId = $(this).data('product-id'); // Rename to 'product-id'
+                if (confirm('Are you sure you want to delete this product?')) {
+                    deleteProduct(productId);
+                }
+            });
+        }
+
+        function fetchProductDetails(productId) {
+            $.ajax({
+                url: './php/product-details.php',
+                method: 'GET',
+                dataType: 'json',
+                data: { product_id: productId },
+                success: function (response) {
+                    console.log('Fetch Product Details Success:', response);
+                    if (response) {
+                        $('#editProductModal').remove();
+                        const modalHtml = `
+                    <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editProductModalLabel">Edit Product</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="editProductForm">
+                                        <input type="hidden" name="product_id" value="${productId}">
+                                        <div class="mb-3">
+                                            <label class="form-label">Product Name</label>
+                                            <input type="text" class="form-control" name="product_name" value="${response.product_name || ''}" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Price</label>
+                                            <input type="number" step="0.01" class="form-control" name="price" value="${response.price || ''}" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Quantity Left</label>
+                                            <input type="number" class="form-control" name="quantity_left" value="${response.quantity_left || ''}" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Category</label>
+                                            <input type="text" class="form-control" name="product_category" value="${response.product_category || ''}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Operating System</label>
+                                            <input type="text" class="form-control" name="operating_system" value="${response.operating_system || ''}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Processor</label>
+                                            <input type="text" class="form-control" name="processor" value="${response.processor || ''}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Graphic Card</label>
+                                            <input type="text" class="form-control" name="graphic_card" value="${response.graphic_card || ''}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Memory</label>
+                                            <input type="text" class="form-control" name="memory" value="${response.memory || ''}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Display Resolution</label>
+                                            <input type="text" class="form-control" name="display_resolution" value="${response.display_resolution || ''}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Description</label>
+                                            <textarea class="form-control" name="description">${response.description || ''}</textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Product Image URL</label>
+                                            <input type="text" class="form-control" name="product_image" value="${response.product_image || ''}">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                        $('body').append(modalHtml);
+                        const modal = new bootstrap.Modal(document.getElementById('editProductModal'));
+                        modal.show();
+                        $('#editProductForm').on('submit', function (e) {
+                            e.preventDefault();
+                            updateProduct();
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log('Fetch Product Details Error:', { error, status, response: xhr.responseText });
+                }
+            });
+        }
+
+        function updateProduct() {
+            const formData = $('#editProductForm').serialize();
+            $.ajax({
+                url: './php/product_update.php',
+                method: 'POST',
+                data: formData,
+                dataType: 'json',
+                success: function (response) {
+                    console.log('Update Product Success:', response);
+                    if (response.success) {
+                        alert('Product updated successfully');
+                        $('#editProductModal').modal('hide');
+                        fetchProducts();
+                    } else {
+                        alert('Update failed: ' + (response.message || 'Unknown error'));
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log('Update Product Error:', { error, status, response: xhr.responseText });
+                    alert('Error updating product');
+                }
+            });
+        }
+
+        function deleteProduct(productId) {
+            $.ajax({
+                url: './php/product_delete.php',
+                method: 'POST',
+                data: { product_id: productId },
+                dataType: 'json',
+                success: function (response) {
+                    console.log('Delete Product Success:', response);
+                    if (response.success) {
+                        alert('Product deleted successfully');
+                        fetchProducts();
+                    } else {
+                        alert('Delete failed: ' + (response.message || 'Unknown error'));
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log('Delete Product Error:', { error, status, response: xhr.responseText });
+                    alert('Error deleting product');
+                }
+            });
+        }
+
+        // Add Product Modal (Add this to the Product Management tab)
+        $(document).ready(function () {
+            $('#products-content').prepend(`
+        <div class="row mb-3">
+            <div class="col-6">
+                <h5 class="card-title"><i class="fas fa-box"></i> Product List</h5>
+            </div>
+            <div class="col text-end">
+                <a type="button" class="btn btn-light" id="openAddProductModal"><i class="fa-solid fa-plus"></i></a>
+            </div>
+        </div>
+    `);
+
+            $('#openAddProductModal').on('click', function () {
+                $('#addProductModal').remove();
+                const modalHtml = `
+            <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addProductModalLabel">Add New Product</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="addProductForm">
+                                <div class="mb-3">
+                                    <label class="form-label">Product Name</label>
+                                    <input type="text" class="form-control" name="product_name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Price</label>
+                                    <input type="number" step="0.01" class="form-control" name="price" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Quantity Left</label>
+                                    <input type="number" class="form-control" name="quantity_left" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Category</label>
+                                    <input type="text" class="form-control" name="product_category">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Operating System</label>
+                                    <input type="text" class="form-control" name="operating_system">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Processor</label>
+                                    <input type="text" class="form-control" name="processor">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Graphic Card</label>
+                                    <input type="text" class="form-control" name="graphic_card">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Memory</label>
+                                    <input type="text" class="form-control" name="memory">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Display Resolution</label>
+                                    <input type="text" class="form-control" name="display_resolution">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Description</label>
+                                    <textarea class="form-control" name="description"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Product Image URL</label>
+                                    <input type="text" class="form-control" name="product_image">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Add Product</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+                $('body').append(modalHtml);
+                const modal = new bootstrap.Modal(document.getElementById('addProductModal'));
+                modal.show();
+                $('#addProductForm').on('submit', function (e) {
+                    e.preventDefault();
+                    addProduct();
+                });
+            });
+        });
+
+        function addProduct() {
+            const formData = $('#addProductForm').serialize();
+            $.ajax({
+                url: './php/product_add.php',
+                method: 'POST',
+                data: formData,
+                dataType: 'json',
+                success: function (response) {
+                    console.log('Add Product Success:', response);
+                    if (response.success) {
+                        alert('Product added successfully');
+                        $('#addProductModal').modal('hide');
+                        fetchProducts();
+                    } else {
+                        alert('Add failed: ' + (response.message || 'Unknown error'));
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log('Add Product Error:', { error, status, response: xhr.responseText });
+                    alert('Error adding product');
+                }
+            });
+        }
+    </script>
+    <script>
+        function fetchOrders() {
+            $.ajax({
+                url: './php/order_fetch_all.php', // Assuming this PHP file is created based on the provided PHP snippet
+                method: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    console.log('Fetch Orders Success:', response);
+                    if (response.success && response.orders && response.orders.length > 0) {
+                        renderTable('orderList', response.orders, '', {
+                            order_id: 'ID',
+                            user_name: 'Username',
+                            address_1: 'Address',
+                            product_name: 'Product Name',
+                            address_2: ' ',
+                            postal_code: ' ',
+                            city: ' ',
+                            state: ' ',
+                            country: ' ',
+                            order_detail_quantity: 'Quantity',
+                            order_pay_at: 'Payment Date',
+                            order_status: 'Status',
+                            total: 'Total',
+                            payment_method: 'Payment Method',
+                            order_method: 'Order Method'
+                        }, { order_status: true }); // Indicate order_status is editable
+                    } else {
+                        $('#orderList').html('<p>No orders found</p>');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log('Fetch Orders Error:', { error, status, response: xhr.responseText });
+                    $('#orderList').html('<p>Error loading orders</p>');
+                }
+            });
+        }
+
+        function fetchOrderDetails(orderId) {
+            $.ajax({
+                url: './php/order_details.php', // Assuming this PHP file will fetch order details
+                method: 'GET',
+                dataType: 'json',
+                data: { order_id: orderId },
+                success: function (response) {
+                    console.log('Fetch Order Details Success:', response);
+                    if (response) {
+                        $('#editOrderModal').remove();
+                        const modalHtml = `
+                    <div class="modal fade" id="editOrderModal" tabindex="-1" aria-labelledby="editOrderModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editOrderModalLabel">Edit Order Status</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="editOrderForm">
+                                        <input type="hidden" name="order_id" value="${orderId}">
+                                        <div class="mb-3">
+                                            <label class="form-label">Order Status</label>
+                                            <select class="form-control" name="order_status" required>
+                                                <option value="Received" ${response.order_status === 'Received' ? 'selected' : ''}>Received</option>
+                                                <option value="Processing" ${response.order_status === 'Processing' ? 'selected' : ''}>Processing</option>
+                                                <option value="Shipped" ${response.order_status === 'Shipped' ? 'selected' : ''}>Shipped</option>
+                                                <option value="Delivered" ${response.order_status === 'Delivered' ? 'selected' : ''}>Delivered</option>
+                                                <option value="Cancelled" ${response.order_status === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                        $('body').append(modalHtml);
+                        const modal = new bootstrap.Modal(document.getElementById('editOrderModal'));
+                        modal.show();
+                        $('#editOrderForm').on('submit', function (e) {
+                            e.preventDefault();
+                            updateOrder();
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log('Fetch Order Details Error:', { error, status, response: xhr.responseText });
+                }
+            });
+        }
+
+        function updateOrder() {
+            const formData = $('#editOrderForm').serialize();
+            $.ajax({
+                url: './php/order_update.php', // Assuming this PHP file will handle status updates
+                method: 'POST',
+                data: formData,
+                dataType: 'json',
+                success: function (response) {
+                    console.log('Update Order Success:', response);
+                    if (response.success) {
+                        alert('Order status updated successfully');
+                        $('#editOrderModal').modal('hide');
+                        fetchOrders();
+                    } else {
+                        alert('Update failed: ' + (response.message || 'Unknown error'));
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log('Update Order Error:', { error, status, response: xhr.responseText });
+                    alert('Error updating order status');
+                }
+            });
+        }
+
+        function updateOrderStatusInline(orderId, field, newValue) {
+            $.ajax({
+                url: './php/order_update.php',
+                method: 'POST',
+                data: { order_id: orderId, [field]: newValue },
+                dataType: 'json',
+                success: function (response) {
+                    console.log('Update Order Status Inline Success:', response);
+                    if (response.success) {
+                        alert('Order status updated successfully');
+                        fetchOrders();
+                    } else {
+                        alert('Update failed: ' + (response.message || 'Unknown error'));
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log('Update Order Status Inline Error:', { error, status, response: xhr.responseText });
+                    alert('Error updating order status');
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

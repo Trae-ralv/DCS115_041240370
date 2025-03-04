@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .hover-bg-body-secondary:hover {
+            background-color: #dee2e6 !important;
+        }
+
+        .hover-bg-body-secondary {
+            transition: background-color 0.3s ease;
+        }
+
+        .def-text-color {
+            color: #343a40;
+        }
+
+        .footer {
+            color: #000;
+            padding-top: 30px !important;
+        }
+
+        .footer a {
+            color: inherit;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            padding: 0 0 0 5%;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+
+        .payment-option input[type="radio"] {
+            margin-right: 10px;
+            height: 80px;
+        }
+
+        .payment-logo {
+            height: auto;
+            justify-items: end;
+            margin-left: 10px;
+        }
+
+        .selected,
+        .payment-option:hover {
+            background-color: #dee2e6;
+        }
+
+        .tab-pane {
+            background-color: #ffffff;
+            border-radius: 5px;
+        }
+
+        @media (min-width:1024px) {
+            #mid-header {
+                margin: 0% 10%;
+                width: 80%;
+            }
+
+            #top-header {
+                margin: 0% 10%;
+                width: 80%;
+            }
+
+            .main-carousel {
+                margin: 0% 10%;
+                width: 80%;
+            }
+
+            #checkout-container {
+                margin: 4% 10% 0 10%;
+                width: 80%;
+            }
+
+            #payment-container {
+                width: 45%;
+                margin: 0 0 0 5%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <nav class="navbar bg-black">
+        <form class="container-fluid justify-content-end" id="top-header">
+        </form>
+    </nav>
+    <nav class="navbar navbar-expand-lg bg-body-secondary py-0">
+        <div class="container-fluid" id="mid-header">
+            <a class="navbar-brand justify-content-center" href="./index.html">
+                <img src="./images/logo.webp" alt="Logo" width="40" height="40"
+                    class="d-inline-block align-items-center me-3">
+                <a class="me-5 text-decoration-none fs-4 def-text-color" href="./index.html"><strong>WOU
+                        Tech</strong></a>
+            </a>
+            <button class="navbar-toggler border-0 bg-transparent" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="true"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-3 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height:full;">
+                    <li class="nav-item">
+                        <button type="button" class="py-3 px-3 border-0 bg-transparent hover-bg-body-secondary">
+                            <a class="nav-link" href="#"><strong>About Us</strong></a>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="py-3 px-3 border-0 bg-transparent hover-bg-body-secondary">
+                            <a class="nav-link" href="./product.html"><strong>Product</strong></a>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="py-3 px-3 border-0 bg-transparent hover-bg-body-secondary">
+                            <a class="nav-link" href="./service.html"><strong>Services</strong></a>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid row mt-5" id="checkout-container">
+        <div class="col-6">
+            <h2 class="mb-4">Checkout</h2>
+            <div class="row align-items-center mb-2">
+                <div class="col-3">
+                    <h5>Product Total:</h5>
+                </div>
+                <div class="col-1">
+                    <h5>RM</h5>
+                </div>
+                <div class="col-2 text-end">
+                    <h5><span id="subTotalDisplay">0.00</span></h5>
+                </div>
+            </div>
+            <div class="row align-items-center mb-2">
+                <div class="col-3">
+                    <h5>Shipping Fee:</h5>
+                </div>
+                <div class="col-1">
+                    <h5>RM</h5>
+                </div>
+                <div class="col-2 text-end">
+                    <h5><span id="shippingFeeDisplay">0.00</span></h5>
+                </div>
+            </div>
+            <div class="row align-items-center mb-4">
+                <div class="col-3">
+                    <h5>Total:</h5>
+                </div>
+                <div class="col-1">
+                    <h5>RM</h5>
+                </div>
+                <div class="col-2 text-end">
+                    <h5><span id="grandTotalDisplay">0.00</span></h5>
+                </div>
+            </div>
+
+            <ul class="nav nav-tabs" id="checkoutTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="delivery-tab" data-bs-toggle="tab" data-bs-target="#delivery"
+                        type="button" role="tab" aria-controls="delivery" aria-selected="true">Item Delivery</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pickup-tab" data-bs-toggle="tab" data-bs-target="#pickup" type="button"
+                        role="tab" aria-controls="pickup" aria-selected="false">Self Pickup</button>
+                </li>
+            </ul>
+
+            <div class="tab-content mt-3" id="checkoutTabContent">
+                <div class="tab-pane fade show active" id="delivery" role="tabpanel" aria-labelledby="delivery-tab">
+                    <form id="deliveryForm">
+                        <div class="row g-3 p-4">
+                            <div class="col-12">
+                                <label for="address1" class="form-label">Address Line 1</label>
+                                <input type="text" class="form-control" id="address1" name="address_1" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="address2" class="form-label">Address Line 2 (Optional)</label>
+                                <input type="text" class="form-control" id="address2" name="address_2">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="postalCode" class="form-label">Postal Code</label>
+                                <input type="text" class="form-control" id="postalCode" name="postal_code" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="city" class="form-label">City</label>
+                                <input type="text" class="form-control" id="city" name="city" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="state" class="form-label">State</label>
+                                <input type="text" class="form-control" id="state" name="state" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="country" class="form-label">Country</label>
+                                <input type="text" class="form-control" id="country" name="country" required>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="tab-pane fade" id="pickup" role="tabpanel" aria-labelledby="pickup-tab">
+                    <div class="card">
+                        <div class="card-body">
+                            <p>Please Allow up to 1-2 Working Day, You can always track ur status in Profile > Order
+                                Tracking</p>
+                            <h5 class="card-title">Pickup Location</h5>
+                            <p class="card-text">
+                                <strong>Main Store</strong><br>
+                                7, Gat Lebuh China, Taman Dhoby Ghaut,<br>10300 George Town,<br>Pulau
+                                Pinang,<br>Malaysia
+                            </p>
+                            <p><strong>Pickup Hours</strong> <br>Mon-Fri: 9 AM - 6 PM<br>Sat-Sun: 9 AM - 3 PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3 mt-5" id="payment-container">
+            <h2>Payment</h2>
+            <p>How would you like to pay?</p>
+
+            <form id="paymentForm">
+                <div class="payment-option">
+                    <input type="radio" id="paypal" name="paymentMethod" value="paypal" required>
+                    <label for="paypal">
+                        Paypal
+                        <img src="./images/paypal.webp" alt="PayPal Logo" class="payment-logo" width="80">
+                    </label>
+                </div>
+
+                <div class="payment-option">
+                    <input type="radio" id="creditCard" name="paymentMethod" value="creditCard" required>
+                    <label for="creditCard">
+                        Credit/Debit Card
+                        <img src="./images/visa.webp" alt="Visa Logo" class="payment-logo" width="60">
+                        <img src="./images/mastercard.webp" alt="MasterCard Logo" class="payment-logo" width="60">
+                    </label>
+                </div>
+
+                <div class="payment-option">
+                    <input type="radio" id="touchNgo" name="paymentMethod" value="touchNgo" required>
+                    <label for="touchNgo">
+                        Touch 'n Go eWallet
+                        <img src="./images/tng.webp" alt="Touch 'n Go Logo" class="payment-logo" width="60">
+                    </label>
+                </div>
+
+                <div class="payment-option">
+                    <input type="radio" id="grabPay" name="paymentMethod" value="grabPay" required>
+                    <label for="grabPay">
+                        GrabPay
+                        <img src="./images/grabpay.webp" alt="GrabPay Logo" class="payment-logo" width="60">
+                    </label>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Combined Action Button -->
+    <div class="container-fluid text-end mb-5" style="width: 60%; margin: 0 20%;">
+        <button type="button" id="placeOrderButton" class="btn btn-primary btn-lg w-25">Continue</button>
+    </div>
+
+    <footer class="footer py-4 bg-body-secondary">
+        <div class="container">
+            <div class="row ms-5">
+                <!-- Contact Section (Merged Email & Working Hours) -->
+                <div class="col-md-4">
+                    <h6 class="fw-bold">Contact</h6>
+                    <p>012 - 3456789<br>013 - 4578991<br>019 - 9867866</p>
+
+                    <h6 class="fw-bold mt-5">Email</h6>
+                    <p>contact@woutech.help.com</p>
+                </div>
+
+                <!-- Address Section -->
+                <div class="col-md-4">
+                    <h6 class="fw-bold">Address</h6>
+                    <p>7, Gat Lebuh China,<br>Taman Dhoby Ghaut,<br>10300 George Town,<br>Pulau Pinang</p>
+
+                    <h6 class="fw-bold mt-5">Working Hours</h6>
+                    <p>Mon-Fri: 9:00 am - 6:00 pm<br>Sat-Sun: 9:00 am - 3:00 pm</p>
+                </div>
+
+                <!-- Social Media & Payment Methods -->
+                <div class="col-md-4">
+                    <h6 class="fw-bold">Follow Us</h6>
+                    <a href="https://www.facebook.com/"><img src="./images/facebook.webp" alt="Facebook" width="35"
+                            class="me-3"></a>
+                    <a href="https://www.instagram.com/"><img src="./images/insta.webp" alt="Instagram" width="35"
+                            class="me-3"></a>
+                    <a href="https://x.com/?lang=en"><img src="./images/x.webp" alt="X" width="35" class="me-3"></a>
+                    <a href="https://www.youtube.com/"><img src="./images/youtube.webp" alt="YouTube" width="40"
+                            class="me-3"></a>
+
+                    <h6 class="fw-bold mt-4">We Accept</h6>
+                    <div class="row">
+                        <div class="col-3 text-center">
+                            <img src="./images/paypal.webp" alt="PayPal" width="70">
+                        </div>
+                        <div class="col-3 text-center">
+                            <img src="./images/visa.webp" alt="Visa" width="70">
+                        </div>
+                        <div class="col-3 text-center">
+                            <img src="./images/mastercard.webp" alt="MasterCard" width="70">
+                        </div>
+                        <div class="col-5 text-center mt-2">
+                            <img src="./images/tng.webp" alt="Touch 'n Go" width="60">
+                        </div>
+                        <div class="col-2 text-center mt-2">
+                            <img src="./images/grabpay.webp" alt="GrabPay" width="60">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright Section -->
+            <div class="mt-5 text-center">
+                <p>© 2025 WOU Tech Sdn. Bhd. All Rights Reserved |
+                    <a href="#">Privacy Policy</a> |
+                    <a href="#">Terms & Regulations</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Header Script -->
+    <script>
+        function updateHeader() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const typeId = parseInt(localStorage.getItem('type_id')) || 0;
+            const topHeader = document.getElementById('top-header');
+
+            if (isLoggedIn && typeId !== 3) {
+                topHeader.innerHTML = `
+                    <div class="navbar-brand"></div>
+                    <div class="d-flex align-items-center">
+                        <a class="btn btn-link text-white text-decoration-none me-3" type="button" id="cart-btn" href="./cart.html">
+                            <i class="fa-solid fa-cart-shopping"></i> Cart
+                        </a>
+                        <div class="dropdown">
+                            <button class="btn btn-link text-white text-decoration-none dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-user"></i> Profile
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                                <li><a class="dropdown-item" href="./profile.html">Profile Info</a></li>
+                                <li><a class="dropdown-item" href="./address.html">Address</a></li>
+                                <li><a class="dropdown-item" href="./order_tracking.html">Order Tracking</a></li>
+                                <li><a class="dropdown-item" href="./appointment_tracking.html">Appointment Tracking</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#" id="logout-btn">Log Out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('logout-btn').addEventListener('click', function (e) {
+                    e.preventDefault();
+                    localStorage.clear();
+                    updateHeader(); // Reset header to logged-out state
+                    window.location.href = 'index.html';
+                });
+            } else {
+                topHeader.innerHTML = `
+                    <button class="btn btn-link me-2 text-white text-decoration-none" type="button" onclick="window.location.href='login.html'">Login</button>
+                    <button class="btn btn-link text-white text-decoration-none" type="button" onclick="window.location.href='register.html'">Register</button>
+                `;
+            }
+        }
+
+        // Update header on page load
+        updateHeader();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Get subtotal from cart data
+        let shippingFee = 25; // Default for West Malaysia
+        let activeTab = 'delivery'; // Default tab
+
+        // Function to format currency
+        function formatCurrency(amount) {
+            return amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        }
+
+        // Function to calculate shipping fee based on state
+        function calculateShippingFee(state) {
+            if (activeTab === 'pickup') {
+                return 0;
+            }
+            const eastMalaysiaStates = ['sarawak', 'sabah'];
+            const normalizedState = state.toLowerCase().trim();
+            return eastMalaysiaStates.includes(normalizedState) ? 50 : 25;
+        }
+
+        // Function to fetch and calculate totals from localStorage
+        function updateTotals(userId = 1) {
+            try {
+                // Changed from 'grandTotal' to 'subtotal'
+                let subtotal = parseFloat(localStorage.getItem('subtotal')) || 0;
+                let grandTotal = subtotal + shippingFee;
+
+                // For pickup, shippingFee is 0
+                if (activeTab === 'pickup') {
+                    shippingFee = 0;
+                    grandTotal = subtotal;
+                }
+
+                document.getElementById('subTotalDisplay').textContent = formatCurrency(subtotal);
+                document.getElementById('shippingFeeDisplay').textContent = formatCurrency(shippingFee);
+                document.getElementById('grandTotalDisplay').textContent = formatCurrency(grandTotal);
+            } catch (error) {
+                console.error('Error updating totals:', error);
+                alert('Could not update totals. Please try again.');
+                // Fallback to default values if localStorage fails
+                document.getElementById('subTotalDisplay').textContent = formatCurrency(0);
+                document.getElementById('shippingFeeDisplay').textContent = formatCurrency(shippingFee);
+                document.getElementById('grandTotalDisplay').textContent = formatCurrency(shippingFee);
+            }
+        }
+
+        // Function to fetch and fill address
+        async function fetchAddress(userId) {
+            try {
+                const response = await fetch(`./php/address_fetch.php?user_id=${userId}`);
+                if (!response.ok) throw new Error('Network response was not ok');
+                const address = await response.json();
+
+                if (address && Object.keys(address).length > 0) {
+                    document.getElementById('address1').value = address.address_1 || '';
+                    document.getElementById('address2').value = address.address_2 || '';
+                    document.getElementById('postalCode').value = address.postal_code || '';
+                    document.getElementById('city').value = address.city || '';
+                    document.getElementById('state').value = address.state || '';
+                    document.getElementById('country').value = address.country || '';
+
+                    if (activeTab === 'delivery' && address.state) {
+                        shippingFee = calculateShippingFee(address.state);
+                        updateTotals(userId);
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching address:', error);
+                alert('Could not load saved address. Please enter manually.');
+            }
+        }
+
+        // Tab switching logic
+        document.getElementById('checkoutTabs').addEventListener('shown.bs.tab', function (e) {
+            const targetTab = e.target.getAttribute('data-bs-target');
+            activeTab = targetTab === '#delivery' ? 'delivery' : 'pickup';
+
+            if (activeTab === 'pickup') {
+                shippingFee = 0;
+                document.getElementById('placeOrderButton').textContent = 'Place Pickup Order';
+            } else {
+                const state = document.getElementById('state').value;
+                shippingFee = state ? calculateShippingFee(state) : 25;
+                document.getElementById('placeOrderButton').textContent = 'Place Delivery Order';
+            }
+            updateTotals(1);
+        });
+
+        // Update shipping fee when state changes
+        document.getElementById('state').addEventListener('change', (e) => {
+            if (activeTab === 'delivery') {
+                shippingFee = calculateShippingFee(e.target.value);
+                updateTotals(1);
+            }
+        });
+
+        // Combined order placement function
+        // Combined order placement function
+        document.getElementById('placeOrderButton').addEventListener('click', () => {
+            const selectedMethod = document.querySelector('input[name="paymentMethod"]:checked');
+            if (!selectedMethod) {
+                alert('Please select a payment method.');
+                return;
+            }
+
+            // Get user_id and type_id from localStorage
+            const userId = parseInt(localStorage.getItem('user_id'));
+            const typeId = parseInt(localStorage.getItem('type_id'));
+
+            if (!userId) {
+                alert('Please log in to place an order.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            if (activeTab === 'delivery') {
+                const formData = new FormData(document.getElementById('deliveryForm'));
+                const addressData = Object.fromEntries(formData);
+                const subtotal = parseFloat(document.getElementById('subTotalDisplay').textContent.replace('RM ', '').replace(',', ''));
+                const grandTotal = parseFloat(document.getElementById('grandTotalDisplay').textContent.replace('RM ', '').replace(',', ''));
+
+                fetch('./php/place_order.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        user_id: userId, // Use localStorage value
+                        type_id: typeId, // Add type_id
+                        subtotal: subtotal,
+                        shipping_fee: parseFloat(document.getElementById('shippingFeeDisplay').textContent.replace('RM ', '').replace(',', '')),
+                        grand_total: grandTotal,
+                        address: addressData,
+                        payment_method: selectedMethod.value,
+                        active_tab: 'delivery'
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert(data.message);
+                            window.location.href = './order_tracking.html';
+                        } else {
+                            alert(data.message);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            } else if (activeTab === 'pickup') {
+                const subtotal = parseFloat(document.getElementById('subTotalDisplay').textContent.replace('RM ', '').replace(',', ''));
+                const grandTotal = parseFloat(document.getElementById('grandTotalDisplay').textContent.replace('RM ', '').replace(',', ''));
+
+                fetch('./php/place_order.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        user_id: userId, // Use localStorage value
+                        type_id: typeId, // Add type_id
+                        subtotal: subtotal,
+                        shipping_fee: 0,
+                        grand_total: grandTotal,
+                        address: {},
+                        payment_method: selectedMethod.value,
+                        active_tab: 'pickup'
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert(data.message);
+                            window.location.href = './order_tracking.html';
+                        } else {
+                            alert(data.message);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        });
+
+        // Add click event to payment-option divs to select the radio
+        document.querySelectorAll('.payment-option').forEach(option => {
+            option.addEventListener('click', function (e) {
+                if (e.target.tagName === 'INPUT') return;
+
+                const radio = this.querySelector('input[type="radio"]');
+                if (radio) {
+                    radio.checked = true;
+                    document.querySelectorAll('.payment-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                }
+            });
+        });
+
+        // Radio button change event
+        const radioButtons = document.querySelectorAll('input[name="paymentMethod"]');
+        radioButtons.forEach(radio => {
+            radio.addEventListener('change', function () {
+                document.querySelectorAll('.payment-option').forEach(option => {
+                    option.classList.remove('selected');
+                });
+                if (this.checked) {
+                    this.closest('.payment-option').classList.add('selected');
+                }
+            });
+        });
+
+        // Initial check to apply selected style if any radio is pre-checked
+        document.querySelector('input[name="paymentMethod"]:checked')?.closest('.payment-option')?.classList.add('selected');
+
+        // Initial fetch and display
+        fetchAddress(1);
+        updateTotals(1);
+    </script>
+</body>
+
+</html>

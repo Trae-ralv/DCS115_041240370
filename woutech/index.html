@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .hover-bg-body-secondary:hover {
+            background-color: #dee2e6 !important;
+        }
+
+        .hover-bg-body-secondary {
+            transition: background-color 0.3s ease;
+        }
+
+        .def-text-color {
+            color: #343a40;
+        }
+
+        .footer {
+            color: #000;
+            padding-top: 30px !important;
+        }
+
+        .footer a {
+            color: inherit;
+        }
+
+        .deco-class {
+            border-left: 6px #212529;
+            border-top: 0px;
+            border-right: 0px;
+            border-bottom: 0px;
+            border-style: solid;
+            padding-left: 16px;
+            border-radius: 2px;
+        }
+
+        @media (min-width:1024px) {
+            #main-container {
+                margin: 4% 10%;
+                width: 80%;
+            }
+
+            #mid-header {
+                margin: 0% 10%;
+                width: 80%;
+            }
+
+            #top-header {
+                margin: 0% 10%;
+                width: 80%;
+            }
+
+            .main-carousel {
+                margin: 0% 10%;
+                width: 80%;
+
+            }
+
+            #card-1 {
+                margin: 0% 10%;
+                width: 80%;
+                justify-content: center;
+            }
+
+            .card-body:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .card-nr {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .footer {
+                padding-left: 200px;
+                padding-right: 200px;
+            }
+        }
+
+        @media (max-width<=1024px) {}
+
+        @media(max-width<=425px) {
+            #card-1 {
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+        }
+    </style>
+    <!-- <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .hover-bg-body-secondary:hover {
+            background-color: #dee2e6 !important;
+        }
+
+        .hover-bg-body-secondary {
+            transition: background-color 0.3s ease;
+        }
+
+        .def-text-color {
+            color: #343a40;
+        }
+
+        .footer {
+            background-color: #fff !important;
+            color: #000;
+            padding-top: 30px !important;
+        }
+
+        .footer a {
+            color: inherit;
+        }
+
+        @media (min-width:1024px) {
+            #main-container {
+                margin: 4% 10%;
+                width: 80%;
+            }
+
+            #mid-header {
+                margin: 0% 10%;
+                width: 80%;
+            }
+
+            #top-header {
+                margin: 0% 10%;
+                width: 80%;
+            }
+
+            .footer {
+                padding-left: 200px;
+                padding-right: 200px;
+            }
+        }
+    </style> -->
+</head>
+
+<body>
+    <!-- Header -->
+    <nav class="navbar bg-black">
+        <form class="container-fluid justify-content-end" id="top-header">
+        </form>
+    </nav>
+    <nav class="navbar navbar-expand-lg bg-body-secondary py-0">
+        <div class="container-fluid" id="mid-header">
+            <a class="navbar-brand justify-content-center" href="./index.html">
+                <img src="./images/logo.webp" alt="Logo" width="40" height="40"
+                    class="d-inline-block align-items-center me-3">
+                <a class="me-5 text-decoration-none fs-4 def-text-color" href="./index.html"><strong>WOU
+                        Tech</strong></a>
+            </a>
+            <button class="navbar-toggler border-0 bg-transparent" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="true"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-3 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height:full;">
+                    <li class="nav-item">
+                        <button type="button" class="py-3 px-3 border-0 bg-transparent hover-bg-body-secondary">
+                            <a class="nav-link" href="#"><strong>About Us</strong></a>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="py-3 px-3 border-0 bg-transparent hover-bg-body-secondary">
+                            <a class="nav-link" href="./product.html"><strong>Product</strong></a>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="py-3 px-3 border-0 bg-transparent hover-bg-body-secondary">
+                            <a class="nav-link" href="./service.html"><strong>Services</strong></a>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Carousel -->
+    <div class="container-fluid">
+        <div class="main-carousel">
+            <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="./images/banner1.webp" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="./images/banner2.webp" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="./images/banner3.webp" class="d-block w-100" alt="...">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Catagories -->
+    <div class="container-fluid mt-5" id="card-1">
+        <div class="mb-4">
+            <h2 class="deco-class">Product Category</h2>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <a class="nav-link" href="./product.html?product_type=PC">
+                            <img src="./images/pc.webp" class="d-block w-100" alt="...">
+                            <h3 class="card-title">PCs</h3>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <a class="nav-link" href="./product.html?product_type=Monitor">
+                            <img src="./images/monitor.webp" class="d-block w-100" alt="...">
+                            <h3 class="card-title">Monitor</h3>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <a class="nav-link" href="./product.html?product_type=Laptop">
+                            <img src="./images/product3.webp" class="d-block w-100" alt="...">
+                            <h3 class="card-title">Laptop</h3>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <a class="nav-link" href="./product.html?product_type=Accessories">
+                            <img src="./images/accessories.webp" class="d-block w-100" alt="...">
+                            <h3 class="card-title">Accessories</h3>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CR-->
+    <div class="container-fluid my-5" id="card-1">
+        <div class="mb-4">
+            <h2 class="deco-class">Customer Rating</h2>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card py-3 px-4">
+                    <div class="card-nr">
+                        <h5 class="card-title">Alex Carter</h5>
+                        <a>⭐⭐⭐⭐⭐</a>
+                    </div>
+                    <a>
+                        "Wou Tech is the best place to buy a PC! Their staff was super helpful in guiding me to the
+                        perfect build for my needs. The prices were great, and the customer service was top-notch.
+                        Highly recommended!"
+                    </a>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card py-3 px-4">
+                    <div class="card-nr">
+                        <h5 class="card-title">Alice Mart</h5>
+                        <a>⭐⭐⭐⭐⭐</a>
+                    </div>
+                    <a>
+                        "Bought my gaming rig from Wou Tech, and I couldn't be happier! Super fast performance,
+                        excellent build quality, and the team even helped me with setup. Definitely coming back for
+                        future upgrades!"
+                    </a>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card py-3 px-4">
+                    <div class="card-nr">
+                        <h5 class="card-title">John Doe</h5>
+                        <a>⭐⭐⭐⭐⭐</a>
+                    </div>
+                    <a>
+                        "The most Amazing experience I had at Wou Tech! The staff was knowledgeable and friendly, and
+                        they built me acustom PC that runs like a dream. Smooth transaction and great after-sales
+                        support. 10/10!"
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer py-4 bg-body-secondary">
+        <div class="container">
+            <div class="row ms-5">
+                <!-- Contact Section (Merged Email & Working Hours) -->
+                <div class="col-md-4">
+                    <h6 class="fw-bold">Contact</h6>
+                    <p>012 - 3456789<br>013 - 4578991<br>019 - 9867866</p>
+
+                    <h6 class="fw-bold mt-5">Email</h6>
+                    <p>contact@woutech.help.com</p>
+                </div>
+
+                <!-- Address Section -->
+                <div class="col-md-4">
+                    <h6 class="fw-bold">Address</h6>
+                    <p>7, Gat Lebuh China,<br>Taman Dhoby Ghaut,<br>10300 George Town,<br>Pulau Pinang</p>
+
+                    <h6 class="fw-bold mt-5">Working Hours</h6>
+                    <p>Mon-Fri: 9:00 am - 6:00 pm<br>Sat-Sun: 9:00 am - 3:00 pm</p>
+                </div>
+
+                <!-- Social Media & Payment Methods -->
+                <div class="col-md-4">
+                    <h6 class="fw-bold">Follow Us</h6>
+                    <a href="https://www.facebook.com/"><img src="./images/facebook.webp" alt="Facebook" width="35"
+                            class="me-3"></a>
+                    <a href="https://www.instagram.com/"><img src="./images/insta.webp" alt="Instagram" width="35"
+                            class="me-3"></a>
+                    <a href="https://x.com/?lang=en"><img src="./images/x.webp" alt="X" width="35" class="me-3"></a>
+                    <a href="https://www.youtube.com/"><img src="./images/youtube.webp" alt="YouTube" width="40"
+                            class="me-3"></a>
+
+                    <h6 class="fw-bold mt-4">We Accept</h6>
+                    <div class="row">
+                        <div class="col-3 text-center">
+                            <img src="./images/paypal.webp" alt="PayPal" width="70">
+                        </div>
+                        <div class="col-3 text-center">
+                            <img src="./images/visa.webp" alt="Visa" width="70">
+                        </div>
+                        <div class="col-3 text-center">
+                            <img src="./images/mastercard.webp" alt="MasterCard" width="70">
+                        </div>
+                        <div class="col-5 text-center mt-2">
+                            <img src="./images/tng.webp" alt="Touch 'n Go" width="60">
+                        </div>
+                        <div class="col-2 text-center mt-2">
+                            <img src="./images/grabpay.webp " alt="GrabPay" width="60">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright Section -->
+            <div class="mt-5 text-center">
+                <p>&copy; 2025 WOU Tech Sdn. Bhd. All Rights Reserved |
+                    <a href="#">Privacy Policy</a> |
+                    <a href="#">Terms & Regulations</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- header -->
+    <script>
+        function updateHeader() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const typeId = parseInt(localStorage.getItem('type_id')) || 0;
+            const topHeader = document.getElementById('top-header');
+
+            if (isLoggedIn && typeId !== 3) {
+                topHeader.innerHTML = `
+                    <div class="navbar-brand"></div>
+                    <div class="d-flex align-items-center">
+                        <a class="btn btn-link text-white text-decoration-none me-3" type="button" id="cart-btn" href="./cart.html">
+                            <i class="fa-solid fa-cart-shopping"></i> Cart
+                        </a>
+                        <div class="dropdown">
+                            <button class="btn btn-link text-white text-decoration-none dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-user"></i></i> Profile
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                                <li><a class="dropdown-item" href="./profile.html">Profile Info</a></li>
+                                <li><a class="dropdown-item" href="./address.html">Address</a></li>
+                                <li><a class="dropdown-item" href="./order_tracking.html">Order Tracking</a></li>
+                                <li><a class="dropdown-item" href="./appointment_tracking.html">Appointment Tracking</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#" id="logout-btn">Log Out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('logout-btn').addEventListener('click', function (e) {
+                    e.preventDefault();
+                    localStorage.clear();
+                    updateHeader(); // Reset header to logged-out state
+                    window.location.href = 'index.html';
+                });
+            } else {
+                topHeader.innerHTML = `
+                    <button class="btn btn-link me-2 text-white text-decoration-none" type="button" onclick="window.location.href='login.html'">Login</button>
+                    <button class="btn btn-link text-white text-decoration-none" type="button" onclick="window.location.href='register.html'">Register</button>
+                `;
+            }
+        }
+
+        // Update header on page load
+        updateHeader();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

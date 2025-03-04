@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1%;
+        }
+
+        .product {
+            border: 1px solid #ccc;
+            padding: 2%;
+            width: 24%;
+            margin: 0.5% 0;
+            text-align: center;
+        }
+
+        .product img {
+            max-width: 100%;
+            height: auto;
+        }
+
+
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .hover-bg-body-secondary:hover {
+            background-color: #dee2e6 !important;
+        }
+
+        .hover-bg-body-secondary {
+            transition: background-color 0.3s ease;
+        }
+
+        .def-text-color {
+            color: #343a40;
+        }
+
+        .footer {
+            /* Light background */
+            color: #000;
+            /* Dark text */
+            padding-top: 30px !important;
+        }
+
+        .footer a {
+            color: inherit;
+        }
+
+        .badge {
+            padding: 5px 10px;
+            font-size: 12px;
+            border-radius: 20px;
+            display: inline-flex;
+            /* Flex for alignment */
+            align-items: center;
+            background-color: #007bff;
+            /* Default Bootstrap primary color */
+            color: white;
+            /* Text color */
+            transition: background-color 0.3s ease;
+            /* Smooth hover transition */
+        }
+
+        .badge:hover {
+            background-color: #0056b3;
+            /* Darker shade on hover */
+            cursor: default;
+            /* Indicate it's not clickable as a whole */
+        }
+
+        .remove-filter {
+            margin-left: 8px;
+            padding: 5px 10px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .remove-filter:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .quantity-input {
+            margin: 8% 30%;
+            width: 40%;
+        }
+
+        @media (min-width:1024px) {
+            #main-container {
+                margin: 4% 10%;
+                width: 80%;
+            }
+
+            #mid-header {
+                margin: 0% 10%;
+                width: 80%;
+            }
+
+            #top-header {
+                margin: 0% 10%;
+                width: 80%;
+            }
+
+            .product:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            #cart_quantity_added {
+                margin: 10% 25%;
+                width: 50%;
+            }
+
+        }
+
+        @media (max-width<=1024px) {}
+
+        @media(max-width<=425px) {}
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <nav class="navbar bg-black">
+        <form class="container-fluid justify-content-end" id="top-header">
+        </form>
+    </nav>
+    <nav class="navbar navbar-expand-lg bg-body-secondary py-0">
+        <div class="container-fluid" id="mid-header">
+            <a class="navbar-brand justify-content-center" href="./index.html">
+                <img src="./images/logo.webp" alt="Logo" width="40" height="40"
+                    class="d-inline-block align-items-center me-3">
+                <a class="me-5 text-decoration-none fs-4 def-text-color" href="./index.html"><strong>WOU
+                        Tech</strong></a>
+            </a>
+            <button class="navbar-toggler border-0 bg-transparent" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="true"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-3 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height:full;">
+                    <li class="nav-item">
+                        <button type="button" class="py-3 px-3 border-0 bg-transparent hover-bg-body-secondary">
+                            <a class="nav-link" href="#"><strong>About Us</strong></a>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="py-3 px-3 border-0 bg-transparent hover-bg-body-secondary">
+                            <a class="nav-link" href="./product.html"><strong>Product</strong></a>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="py-3 px-3 border-0 bg-transparent hover-bg-body-secondary">
+                            <a class="nav-link" href="./service.html"><strong>Services</strong></a>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" id="main-container">
+        <div class="row">
+            <div class="col-2">
+                <ul class="nav flex-column">
+                    <!-- Search Bar -->
+                    <li class="nav-item">
+                        <h5>Search</h5>
+                        <input type="text" id="searchInput" class="form-control" placeholder="Search products...">
+                    </li>
+
+                    <!-- Active Filters Display (Hidden by Default) -->
+                    <li class="nav-item mt-3 d-none" id="activeFilters">
+                        <h5>Active Filters</h5>
+                        <div id="filterBadges"></div>
+                    </li>
+
+                    <!-- Price Filter -->
+                    <li class="nav-item mt-3">
+                        <h5>Price Range</h5>
+                        <input type="number" id="minPrice" class="form-control mb-2" placeholder="Min Price" min="0">
+                        <input type="number" id="maxPrice" class="form-control" placeholder="Max Price" min="0">
+                    </li>
+
+                    <!-- Product Type Filter -->
+                    <li class="nav-item mt-3">
+                        <h5>Product Type</h5>
+                        <select id="productType" class="form-select">
+                            <option value="">Select Type</option>
+                            <option value="PC">PC</option>
+                            <option value="Laptop">Laptop</option>
+                            <option value="Monitor">Monitor</option>
+                            <option value="Accessories">Accessories</option>
+                        </select>
+                    </li>
+
+                    <!-- Brand Filter -->
+                    <li class="nav-item mt-3">
+                        <h5>Brand</h5>
+                        <select id="brand" class="form-select">
+                            <option value="">Select Brand</option>
+                            <option value="Intel">Intel</option>
+                            <option value="AMD">AMD</option>
+                            <option value="NVIDIA">NVIDIA</option>
+                            <option value="HP">HP</option>
+                            <option value="Acer">Acer</option>
+                            <option value="Asus">Asus</option>
+                            <option value="Lenovo">Lenovo</option>
+                            <option value="MSI">MSI</option>
+                        </select>
+                    </li>
+
+                    <!-- Reset Button -->
+                    <li class="nav-item mt-3">
+                        <button id="resetFilters" class="btn btn-primary w-100">Reset Filters</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-10">
+                <div class="product-container" id="product-container"></div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer py-4 bg-body-secondary">
+        <div class="container">
+            <div class="row ms-5">
+                <!-- Contact Section (Merged Email & Working Hours) -->
+                <div class="col-md-4">
+                    <h6 class="fw-bold">Contact</h6>
+                    <p>012 - 3456789<br>013 - 4578991<br>019 - 9867866</p>
+
+                    <h6 class="fw-bold mt-5">Email</h6>
+                    <p>contact@woutech.help.com</p>
+                </div>
+
+                <!-- Address Section -->
+                <div class="col-md-4">
+                    <h6 class="fw-bold">Address</h6>
+                    <p>7, Gat Lebuh China,<br>Taman Dhoby Ghaut,<br>10300 George Town,<br>Pulau Pinang</p>
+
+                    <h6 class="fw-bold mt-5">Working Hours</h6>
+                    <p>Mon-Fri: 9:00 am - 6:00 pm<br>Sat-Sun: 9:00 am - 3:00 pm</p>
+                </div>
+
+                <!-- Social Media & Payment Methods -->
+                <div class="col-md-4">
+                    <h6 class="fw-bold">Follow Us</h6>
+                    <a href="https://www.facebook.com/"><img src="./images/facebook.webp" alt="Facebook" width="35"
+                            class="me-3"></a>
+                    <a href="https://www.instagram.com/"><img src="./images/insta.webp" alt="Instagram" width="35"
+                            class="me-3"></a>
+                    <a href="https://x.com/?lang=en"><img src="./images/x.webp" alt="X" width="35" class="me-3"></a>
+                    <a href="https://www.youtube.com/"><img src="./images/youtube.webp" alt="YouTube" width="40"
+                            class="me-3"></a>
+
+                    <h6 class="fw-bold mt-4">We Accept</h6>
+                    <div class="row">
+                        <div class="col-3 text-center">
+                            <img src="./images/paypal.webp" alt="PayPal" width="70">
+                        </div>
+                        <div class="col-3 text-center">
+                            <img src="./images/visa.webp" alt="Visa" width="70">
+                        </div>
+                        <div class="col-3 text-center">
+                            <img src="./images/mastercard.webp" alt="MasterCard" width="70">
+                        </div>
+                        <div class="col-5 text-center mt-2">
+                            <img src="./images/tng.webp" alt="Touch 'n Go" width="60">
+                        </div>
+                        <div class="col-2 text-center mt-2">
+                            <img src="./images/grabpay.webp " alt="GrabPay" width="60">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright Section -->
+            <div class="mt-5 text-center">
+                <p>&copy; 2025 WOU Tech Sdn. Bhd. All Rights Reserved |
+                    <a href="#">Privacy Policy</a> |
+                    <a href="#">Terms & Regulations</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Product -->
+    <script>
+        function parseUrlParameters() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return {
+                search: urlParams.get('search') || '',
+                minPrice: urlParams.get('min_price') || '',
+                maxPrice: urlParams.get('max_price') || '',
+                productType: urlParams.get('product_type') || '',
+                brand: urlParams.get('brand') || ''
+            };
+        }
+
+        function fetchUrl(search, minPrice, maxPrice, productType, brand) {
+            let baseUrl = './php/product.php';
+            const params = new URLSearchParams();
+
+            if (search) params.append('search', search);
+            if (minPrice) params.append('min_price', minPrice);
+            if (maxPrice) params.append('max_price', maxPrice);
+            if (productType) params.append('product_type', productType);
+            if (brand) params.append('brand', brand);
+
+            if (params.toString()) {
+                baseUrl += `?${params.toString()}`;
+            }
+            return baseUrl;
+        }
+
+        function fetchProducts() {
+            // Get current input values, prioritizing user input over URL params
+            const search = document.getElementById('searchInput').value || parseUrlParameters().search;
+            const minPrice = document.getElementById('minPrice').value || parseUrlParameters().minPrice;
+            const maxPrice = document.getElementById('maxPrice').value || parseUrlParameters().maxPrice;
+            const productType = document.getElementById('productType').value || parseUrlParameters().productType;
+            const brand = document.getElementById('brand').value || parseUrlParameters().brand;
+
+            console.log('Fetching with:', { search, minPrice, maxPrice, productType, brand }); // Debug
+
+            const url = fetchUrl(search, minPrice, maxPrice, productType, brand);
+
+            fetch(url)
+                .then(response => response.json())
+                .then(products => {
+                    const container = document.getElementById('product-container');
+                    container.innerHTML = ''; // Clear previous content
+                    if (products.length > 0) {
+                        products.forEach(product => {
+                            const div = document.createElement('div');
+                            div.className = 'product';
+                            div.innerHTML = `
+                        <img src="${product.product_image}" alt="${product.product_name}">
+                        <h5>${product.product_name}</h5>
+                        <div>
+                            <p><strong>RM ${Number(product.price).toFixed(2)}</strong></p>
+                            <input type="number" class="form-control quantity-input" data-product-id="${product.product_id}" min="0" max="${product.quantity_left}" value="1">
+                            <button type="button" class="btn btn-primary add-to-cart" data-product-id="${product.product_id}">Add to Cart</button>
+                            <button type="button" class="btn btn-primary view-product" data-product-id="${product.product_id}">View</button>
+                        </div>
+                    `;
+                            container.appendChild(div);
+                        });
+
+                        // Re-attach event listeners after DOM update
+                        attachEventListeners();
+                    } else {
+                        container.innerHTML = '<p>No products available.</p>';
+                    }
+                    updateActiveFilters(search, minPrice, maxPrice, productType, brand);
+                })
+                .catch(error => console.error('Fetch error:', error));
+        }
+
+        // Function to attach event listeners (to avoid overwriting)
+        function attachEventListeners() {
+            // View buttons
+            document.querySelectorAll('.view-product').forEach(button => {
+                button.addEventListener('click', function () {
+                    const productId = this.getAttribute('data-product-id');
+                    window.location.href = `product_details.html?product_id=${productId}`;
+                });
+            });
+
+            // Add to Cart buttons
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function () {
+                    const productId = this.getAttribute('data-product-id');
+                    const quantityInput = document.querySelector(`.quantity-input[data-product-id="${productId}"]`);
+                    const quantity = parseInt(quantityInput.value) || 0;
+
+                    if (quantity > 0) {
+                        const userId = parseInt(localStorage.getItem('user_id'));
+                        if (userId) {
+                            alert(`Added ${quantity} of Product ID: ${productId} to cart for User ID: ${userId}`);
+                            updateCart(productId, quantity, userId);
+                        }
+                        else {
+                            alert('Please Login to Add items into card');
+                            window.location.href = 'login.html'
+                        }
+                    } else {
+                        alert('Please select a quantity greater than 0');
+                    }
+                });
+            });
+
+
+            // Quantity input changes
+            document.querySelectorAll('.quantity-input').forEach(input => {
+                input.addEventListener('change', function () {
+                    const productId = this.getAttribute('data-product-id');
+                    const maxQuantity = parseInt(this.max);
+                    let newQuantity = parseInt(this.value) || 0;
+
+                    if (newQuantity < 0) {
+                        this.value = 0;
+                        alert('Quantity cannot be negative.');
+                    } else if (newQuantity > maxQuantity) {
+                        this.value = maxQuantity;
+                        alert(`Maximum quantity is ${maxQuantity} for this product.`);
+                    }
+                });
+            });
+        }
+
+        function updateCart(productId, quantity, userId) {
+            $.ajax({
+                url: './php/update_cart.php',
+                type: 'POST',
+                data: {
+                    product_id: productId,
+                    quantity: quantity,
+                    user_id: userId // Use the user_id from localStorage
+                },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.success) {
+                        alert('Item added to cart successfully!');
+                    } else {
+                        alert('Error adding to cart: ' + response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('Error updating cart: ' + error);
+                }
+            });
+        }
+
+        function updateActiveFilters(search, minPrice, maxPrice, productType, brand) {
+            const activeFilters = document.getElementById('activeFilters');
+            const filterBadges = document.getElementById('filterBadges');
+            filterBadges.innerHTML = '';
+
+            const hasFilters = search || minPrice || maxPrice || productType || brand;
+            if (hasFilters) {
+                activeFilters.classList.remove('d-none');
+            } else {
+                activeFilters.classList.add('d-none');
+            }
+
+            if (search) {
+                filterBadges.innerHTML += `<div class="badge bg-primary me-1 mb-1">Search: ${search} <span class="remove-filter" data-type="search">X</span></div>`;
+            }
+            if (minPrice) {
+                filterBadges.innerHTML += `<div class="badge bg-primary me-1 mb-1">Min Price: ${minPrice} <span class="remove-filter" data-type="minPrice">X</span></div>`;
+            }
+            if (maxPrice) {
+                filterBadges.innerHTML += `<div class="badge bg-primary me-1 mb-1">Max Price: ${maxPrice} <span class="remove-filter" data-type="maxPrice">X</span></div>`;
+            }
+            if (productType) {
+                filterBadges.innerHTML += `<div class="badge bg-primary me-1 mb-1">Type: ${productType} <span class="remove-filter" data-type="productType">X</span></div>`;
+            }
+            if (brand) {
+                filterBadges.innerHTML += `<div class="badge bg-primary me-1 mb-1">Brand: ${brand} <span class="remove-filter" data-type="brand">X</span></div>`;
+            }
+
+            document.querySelectorAll('.remove-filter').forEach(span => {
+                span.addEventListener('click', function () {
+                    const type = this.getAttribute('data-type');
+                    if (type === 'search') document.getElementById('searchInput').value = '';
+                    if (type === 'minPrice') document.getElementById('minPrice').value = '';
+                    if (type === 'maxPrice') document.getElementById('maxPrice').value = '';
+                    if (type === 'productType') document.getElementById('productType').value = '';
+                    if (type === 'brand') document.getElementById('brand').value = '';
+                    fetchProducts();
+                });
+            });
+        }
+
+        // Initial load and event listeners
+        window.addEventListener('load', () => {
+            fetchProducts();
+            attachEventListeners(); // Attach initial listeners
+
+            // Add event listeners for inputs and buttons
+            document.getElementById('searchInput').addEventListener('input', fetchProducts);
+            document.getElementById('minPrice').addEventListener('input', fetchProducts);
+            document.getElementById('maxPrice').addEventListener('input', fetchProducts);
+            document.getElementById('productType').addEventListener('change', fetchProducts);
+            document.getElementById('brand').addEventListener('change', fetchProducts);
+            document.getElementById('resetFilters').addEventListener('click', () => {
+                document.getElementById('searchInput').value = '';
+                document.getElementById('minPrice').value = '';
+                document.getElementById('maxPrice').value = '';
+                document.getElementById('productType').value = '';
+                document.getElementById('brand').value = '';
+                history.pushState({}, document.title, window.location.pathname); // Clear URL params
+                fetchProducts();
+            });
+        });
+    </script>
+
+    <!-- Header -->
+    <script>
+        function updateHeader() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const typeId = parseInt(localStorage.getItem('type_id')) || 0;
+            const topHeader = document.getElementById('top-header');
+
+            if (isLoggedIn && typeId !== 3) {
+                topHeader.innerHTML = `
+                    <div class="navbar-brand"></div>
+                    <div class="d-flex align-items-center">
+                        <a class="btn btn-link text-white text-decoration-none me-3" type="button" id="cart-btn" href="./cart.html">
+                            <i class="fa-solid fa-cart-shopping"></i> Cart
+                        </a>
+                        <div class="dropdown">
+                            <button class="btn btn-link text-white text-decoration-none dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-user"></i></i> Profile
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                                <li><a class="dropdown-item" href="./profile.html">Profile Info</a></li>
+                                <li><a class="dropdown-item" href="./address.html">Address</a></li>
+                                <li><a class="dropdown-item" href="./order_tracking.html">Order Tracking</a></li>
+                                <li><a class="dropdown-item" href./appointment_tracking.html">Appointment Tracking</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#" id="logout-btn">Log Out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('logout-btn').addEventListener('click', function (e) {
+                    e.preventDefault();
+                    localStorage.clear();
+                    updateHeader(); // Reset header to logged-out state
+                    window.location.href = 'index.html';
+                });
+            } else {
+                topHeader.innerHTML = `
+                    <button class="btn btn-link me-2 text-white text-decoration-none" type="button" onclick="window.location.href='login.html'">Login</button>
+                    <button class="btn btn-link text-white text-decoration-none" type="button" onclick="window.location.href='register.html'">Register</button>
+                `;
+            }
+        }
+
+        // Update header on page load
+        updateHeader();
+    </script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

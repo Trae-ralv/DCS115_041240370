@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Booking</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        }
+
+        .hover-bg-body-secondary:hover {
+            background-color: #dee2e6 !important;
+        }
+
+        .hover-bg-body-secondary {
+            transition: background-color 0.3s ease;
+        }
+
+        .def-text-color {
+            color: #343a40;
+        }
+
+        .footer {
+            color: #000;
+            padding-top: 30px !important;
+            border-top: 1px solid #ddd;
+        }
+
+        .footer a {
+            color: inherit;
+        }
+
+        .service-method-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+            flex: 1;
+        }
+
+        .date-time-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .disabled-option {
+            color: #6c757d !important; /* Grayed out text for disabled options */
+            background-color: #e9ecef !important; /* Light gray background */
+            cursor: not-allowed;
+        }
+
+        @media (min-width:1024px) {
+            #mid-header {
+                margin: 0% 10%;
+                width: 80%;
+            }
+
+            #top-header {
+                margin: 0% 10%;
+                width: 80%;
+            }
+
+            .main-content {
+                margin: 5% 20%;
+                width: 60%;
+                padding: 1%;
+                border: 1px solid #ccc;
+                border-radius: 20px;
+            }
+
+            .footer {
+                padding-left: 200px;
+                padding-right: 200px;
+            }
+        }
+
+        @media (max-width: 1023px) {
+            .service-method-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <nav class="navbar bg-black">
+        <form class="container-fluid justify-content-end" id="top-header">
+        </form>
+    </nav>
+    <nav class="navbar navbar-expand-lg bg-body-secondary py-0">
+        <div class="container-fluid" id="mid-header">
+            <a class="navbar-brand justify-content-center" href="./index.html">
+                <img src="./images/logo.webp" alt="Logo" width="40" height="40"
+                    class="d-inline-block align-items-center me-3">
+                <a class="me-5 text-decoration-none fs-4 def-text-color" href="./index.html"><strong>WOU
+                        Tech</strong></a>
+            </a>
+            <button class="navbar-toggler border-0 bg-transparent" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="true"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-3 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height:full;">
+                    <li class="nav-item">
+                        <button type="button" class="py-3 px-3 border-0 bg-transparent hover-bg-body-secondary">
+                            <a class="nav-link" href="#"><strong>About Us</strong></a>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="py-3 px-3 border-0 bg-transparent hover-bg-body-secondary">
+                            <a class="nav-link" href="./product.html"><strong>Product</strong></a>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="py-3 px-3 border-0 bg-transparent hover-bg-body-secondary">
+                            <a class="nav-link" href="./service.html"><strong>Services</strong></a>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid main-content mt-5">
+        <h2>Appointment Booking</h2>
+        <form id="appointmentForm" class="needs-validation" novalidate>
+            <!-- Service Type and Service Method in the same row -->
+            <div class="row service-method-row">
+                <div class="col-12 col-md-6 form-group">
+                    <label for="serviceType" class="form-label">Service Type:</label>
+                    <select class="form-select" id="serviceType" name="service_type_id" required>
+                        <option value="" disabled selected>Select a service</option>
+                        <option value="1">E-Waste Recycling</option>
+                        <option value="2">PC Customization</option>
+                        <option value="3">Wiring Services</option>
+                    </select>
+                    <div class="invalid-feedback">Please select a service type.</div>
+                </div>
+                <div class="col-12 col-md-6 form-group">
+                    <label for="serviceMethod" class="form-label">Service Method:</label>
+                    <select class="form-select" id="serviceMethod" name="service_method_id" required>
+                        <option value="" disabled selected>Select a method</option>
+                        <option value="1">On-site Servicing</option>
+                        <option value="2">In-house Servicing</option>
+                    </select>
+                    <div class="invalid-feedback">Please select a service method.</div>
+                </div>
+            </div>
+
+            <!-- Address Fields -->
+            <div class="mb-3">
+                <label for="book_address_1" class="form-label">Address Line 1</label>
+                <input type="text" class="form-control" id="book_address_1" name="book_address_1" required>
+                <div class="invalid-feedback">Please enter address line 1.</div>
+            </div>
+            <div class="mb-3">
+                <label for="book_address_2" class="form-label">Address Line 2 (Optional)</label>
+                <input type="text" class="form-control" id="book_address_2" name="book_address_2">
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label for="book_postal_code" class="form-label">Postal Code</label>
+                    <input type="text" class="form-control" id="book_postal_code" name="book_postal_code" required>
+                    <div class="invalid-feedback">Please enter postal code.</div>
+                </div>
+                <div class="col-md-4">
+                    <label for="book_city" class="form-label">City</label>
+                    <input type="text" class="form-control" id="book_city" name="book_city" required>
+                    <div class="invalid-feedback">Please enter city.</div>
+                </div>
+                <div class="col-md-4">
+                    <label for="book_state" class="form-label">State</label>
+                    <input type="text" class="form-control" id="book_state" name="book_state" required>
+                    <div class="invalid-feedback">Please enter state.</div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="book_country" class="form-label">Country</label>
+                <input type="text" class="form-control" id="book_country" name="book_country" required>
+                <div class="invalid-feedback">Please enter country.</div>
+            </div>
+            <div class="mb-3">
+                <label for="book_description" class="form-label">Description ( Please provide more detail information for better service 😊 )</label>
+                <textarea class="form-control" id="book_description" name="book_description" rows="3" required></textarea>
+                <div class="invalid-feedback">Please enter a description.</div>
+            </div>
+
+            <!-- Date and Time Selection -->
+            <div class="date-time-container mb-3">
+                <div class="form-group">
+                    <label for="book_date" class="form-label">Date</label>
+                    <input type="date" class="form-control" id="book_date" name="booking_date" required>
+                    <div class="invalid-feedback">Please select a future date.</div>
+                </div>
+                <div class="form-group">
+                    <label for="book_time" class="form-label">Time</label>
+                    <select class="form-select" id="book_time" name="booking_time" required>
+                        <option value="" disabled selected>Select a time</option>
+                        <option value="10:00">10 AM</option>
+                        <option value="11:00">11 AM</option>
+                        <option value="12:00">12 PM</option>
+                        <option value="13:00">1 PM</option>
+                        <option value="14:00">2 PM</option>
+                        <option value="15:00">3 PM</option>
+                        <option value="16:00">4 PM</option>
+                        <option value="17:00">5 PM</option>
+                        <option value="18:00">6 PM</option>
+                        <option value="19:00">7 PM</option>
+                    </select>
+                    <div class="invalid-feedback">Please select a time between 10 AM and 7 PM.</div>
+                </div>
+            </div>
+
+            <!-- Confirm Button -->
+            <div class="text-end">
+                <button type="submit" class="btn btn-primary px-4">Confirm</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer py-4 bg-body-secondary">
+        <div class="container">
+            <div class="row ms-5">
+                <!-- Contact Section -->
+                <div class="col-md-4">
+                    <h6 class="fw-bold">Contact</h6>
+                    <p>012 - 3456789<br>013 - 4578991<br>019 - 9867866</p>
+                    <h6 class="fw-bold mt-5">Email</h6>
+                    <p>contact@woutech.help.com</p>
+                </div>
+
+                <!-- Address Section -->
+                <div class="col-md-4">
+                    <h6 class="fw-bold">Address</h6>
+                    <p>Some default text to fill some space, and something more so there is more too</p>
+                    <h6 class="fw-bold mt-5">Working Hours</h6>
+                    <p>Weekday: 8 am - 10 pm<br>Weekend: 8 am - 5 pm</p>
+                </div>
+
+                <!-- Social Media & Payment Methods -->
+                <div class="col-md-4">
+                    <h6 class="fw-bold">Follow Us</h6>
+                    <div class="social-icon">
+                        <a href="https://www.facebook.com/"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
+                        <a href="https://x.com/?lang=en"><i class="fab fa-x-twitter"></i></a>
+                        <a href="https://www.youtube.com/"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    <h6 class="fw-bold mt-4">Payment Methods</h6>
+                    <div class="row">
+                        <div class="col-3 text-center">
+                            <img src="./images/paypal.webp" alt="PayPal" width="70">
+                        </div>
+                        <div class="col-3 text-center">
+                            <img src="./images/visa.webp" alt="Visa" width="70">
+                        </div>
+                        <div class="col-3 text-center">
+                            <img src="./images/mastercard.webp" alt="MasterCard" width="70">
+                        </div>
+                        <div class="col-3 text-center">
+                            <img src="./images/tng.webp" alt="Touch 'n Go" width="60">
+                        </div>
+                        <div class="col-3 text-center">
+                            <img src="./images/grabpay.webp" alt="GrabPay" width="60">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright Section -->
+            <div class="mt-5 text-center">
+                <p>© Copyright 2025 WOU Tech Sdn. Bhd. All Rights Reserved | <a href="#">Privacy Policy</a> | <a href="#">Terms & Conditions</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Header Script -->
+    <script>
+        function updateHeader() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const typeId = parseInt(localStorage.getItem('type_id')) || 0;
+            const topHeader = document.getElementById('top-header');
+
+            if (isLoggedIn && typeId !== 3) {
+                topHeader.innerHTML = `
+                    <div class="navbar-brand"></div>
+                    <div class="d-flex align-items-center">
+                        <a class="btn btn-link text-white text-decoration-none me-3" type="button" id="cart-btn" href="./cart.html">
+                            <i class="fa-solid fa-cart-shopping"></i> Cart
+                        </a>
+                        <div class="dropdown">
+                            <button class="btn btn-link text-white text-decoration-none dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-user"></i> Profile
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                                <li><a class="dropdown-item" href="./profile.html">Profile Info</a></li>
+                                <li><a class="dropdown-item" href="./address.html">Address</a></li>
+                                <li><a class="dropdown-item" href="./order_tracking.html">Order Tracking</a></li>
+                                <li><a class="dropdown-item" href="./appointment_tracking.html">Appointment Tracking</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#" id="logout-btn">Log Out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('logout-btn').addEventListener('click', function (e) {
+                    e.preventDefault();
+                    localStorage.clear();
+                    updateHeader(); // Reset header to logged-out state
+                    window.location.href = 'index.html';
+                });
+            } else {
+                topHeader.innerHTML = `
+                    <button class="btn btn-link me-2 text-white text-decoration-none" type="button" onclick="window.location.href='login.html'">Login</button>
+                    <button class="btn btn-link text-white text-decoration-none" type="button" onclick="window.location.href='register.html'">Register</button>
+                `;
+            }
+        }
+
+        // Update header on page load
+        updateHeader();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Function to fetch and fill address data
+        async function fetchAddress(userId) {
+            try {
+                const response = await fetch(`./php/address_fetch.php?user_id=${userId}`);
+                if (!response.ok) throw new Error('Network response was not ok');
+                const address = await response.json();
+
+                if (address && Object.keys(address).length > 0) {
+                    document.getElementById('book_address_1').value = address.address_1 || '';
+                    document.getElementById('book_address_2').value = address.address_2 || '';
+                    document.getElementById('book_postal_code').value = address.postal_code || '';
+                    document.getElementById('book_city').value = address.city || '';
+                    document.getElementById('book_state').value = address.state || '';
+                    document.getElementById('book_country').value = address.country || '';
+                }
+            } catch (error) {
+                console.error('Error fetching address:', error);
+                alert('Could not load saved address. Please enter manually.');
+            }
+        }
+
+        // Set minimum date to tomorrow
+        function setFutureDate() {
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(today.getDate() + 1);
+            const minDate = tomorrow.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+            document.getElementById('book_date').setAttribute('min', minDate);
+        }
+
+        // Function to check existing bookings and disable conflicting times
+        async function checkAndDisableConflictingTimes(bookingDate) {
+            try {
+                const response = await fetch(`./php/check_bookings.php?booking_date=${bookingDate}`);
+                if (!response.ok) throw new Error('Network response was not ok');
+                const bookings = await response.json();
+
+                const timeSelect = document.getElementById('book_time');
+                const options = timeSelect.getElementsByTagName('option');
+
+                for (let option of options) {
+                    let isDisabled = false;
+                    const selectedTime = option.value;
+
+                    for (let booking of bookings) {
+                        const bookingTime = booking.booking_time;
+                        const startRange = new Date(`1970-01-01 ${bookingTime} UTC`).getTime();
+                        const endRange = startRange + (2 * 60 * 60 * 1000); // ±2 hours in milliseconds
+                        const optionTime = new Date(`1970-01-01 ${selectedTime} UTC`).getTime();
+
+                        if (optionTime >= startRange && optionTime <= endRange) {
+                            isDisabled = true;
+                            break;
+                        }
+                    }
+
+                    option.disabled = isDisabled;
+                    if (isDisabled) {
+                        option.classList.add('disabled-option');
+                    } else {
+                        option.classList.remove('disabled-option');
+                    }
+                }
+            } catch (error) {
+                console.error('Error checking bookings:', error);
+                alert('Could not check existing bookings. Please try again.');
+            }
+        }
+
+        // Update time options when date changes
+        document.getElementById('book_date').addEventListener('change', function() {
+            const bookingDate = this.value;
+            if (bookingDate) {
+                checkAndDisableConflictingTimes(bookingDate);
+            }
+        });
+
+        // Form submission handler
+        document.getElementById('appointmentForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (!e.target.checkValidity()) {
+                e.target.classList.add('was-validated');
+                return;
+            }
+
+            const userId = parseInt(localStorage.getItem('user_id')) || 1;
+            const formData = {
+                user_id: userId,
+                service_type_id: document.getElementById('serviceType').value,
+                service_method_id: document.getElementById('serviceMethod').value,
+                book_address_1: document.getElementById('book_address_1').value,
+                book_address_2: document.getElementById('book_address_2').value,
+                book_postal_code: document.getElementById('book_postal_code').value,
+                book_city: document.getElementById('book_city').value,
+                book_state: document.getElementById('book_state').value,
+                book_country: document.getElementById('book_country').value,
+                book_description: document.getElementById('book_description').value,
+                booking_date: document.getElementById('book_date').value,
+                booking_time: document.getElementById('book_time').value
+            };
+
+            try {
+                const response = await fetch('./php/book_appointment.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    alert(data.message);
+                    window.location.href = './appointment_tracking.html';
+                } else {
+                    alert(data.message);
+                }
+            } catch (error) {
+                console.error('Error submitting appointment:', error);
+                alert('An error occurred while submitting the appointment. Please try again.');
+            }
+        });
+
+        // Fetch address and set date/time restrictions on page load
+        const userId = parseInt(localStorage.getItem('user_id')) || 1;
+        fetchAddress(userId);
+        setFutureDate();
+    </script>
+</body>
+
+</html>

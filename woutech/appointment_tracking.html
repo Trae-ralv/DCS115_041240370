@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Tracking</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        }
+
+        .hover-bg-body-secondary:hover {
+            background-color: #dee2e6 !important;
+        }
+
+        .hover-bg-body-secondary {
+            transition: background-color 0.3s ease;
+        }
+
+        .def-text-color {
+            color: #343a40;
+        }
+
+        .footer {
+            color: #000;
+            padding-top: 30px !important;
+            border-top: 1px solid #ddd;
+            margin-top: 130px;
+        }
+
+        .footer a {
+            color: inherit;
+        }
+
+        .appointment-table {
+            margin-top: 20px;
+        }
+
+        .appointment-table th,
+        .appointment-table td {
+            vertical-align: middle;
+        }
+
+        .item-number {
+            font-weight: bold;
+        }
+
+        @media (min-width:1024px) {
+            #mid-header {
+                margin: 0% 10%;
+                width: 80%;
+            }
+
+            #top-header {
+                margin: 0% 10%;
+                width: 80%;
+            }
+
+            .main-content {
+                margin: 0% 10%;
+                width: 80%;
+            }
+
+            .footer {
+                padding-left: 200px;
+                padding-right: 200px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <nav class="navbar bg-black">
+        <form class="container-fluid justify-content-end" id="top-header">
+        </form>
+    </nav>
+    <nav class="navbar navbar-expand-lg bg-body-secondary py-0">
+        <div class="container-fluid" id="mid-header">
+            <a class="navbar-brand justify-content-center" href="./index.html">
+                <img src="./images/logo.webp" alt="Logo" width="40" height="40"
+                    class="d-inline-block align-items-center me-3">
+                <a class="me-5 text-decoration-none fs-4 def-text-color" href="./index.html"><strong>WOU
+                        Tech</strong></a>
+            </a>
+            <button class="navbar-toggler border-0 bg-transparent" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="true"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-3 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height:full;">
+                    <li class="nav-item">
+                        <button type="button" class="py-3 px-3 border-0 bg-transparent hover-bg-body-secondary">
+                            <a class="nav-link" href="#"><strong>About Us</strong></a>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="py-3 px-3 border-0 bg-transparent hover-bg-body-secondary">
+                            <a class="nav-link" href="./product.html"><strong>Product</strong></a>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="py-3 px-3 border-0 bg-transparent hover-bg-body-secondary">
+                            <a class="nav-link" href="./service.html"><strong>Services</strong></a>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid main-content mt-5">
+        <h2>Appointment Tracking</h2>
+        <div class="table-responsive appointment-table">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th> <!-- New column for index -->
+                        <th>Booking ID</th>
+                        <th>Service Type</th>
+                        <th>Service Method</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Address</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="appointmentTableBody">
+                    <!-- Appointments will be populated here via JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer py-4 bg-body-secondary">
+        <div class="container">
+            <div class="row ms-5">
+                <!-- Contact Section -->
+                <div class="col-md-4">
+                    <h6 class="fw-bold">Contact</h6>
+                    <p>012 - 3456789<br>013 - 4578991<br>019 - 9867866</p>
+                    <h6 class="fw-bold mt-5">Email</h6>
+                    <p>contact@woutech.help.com</p>
+                </div>
+
+                <!-- Address Section -->
+                <div class="col-md-4">
+                    <h6 class="fw-bold">Address</h6>
+                    <p>Some default text to fill some space, and something more so there is more too</p>
+                    <h6 class="fw-bold mt-5">Working Hours</h6>
+                    <p>Weekday: 8 am - 10 pm<br>Weekend: 8 am - 5 pm</p>
+                </div>
+
+                <!-- Social Media & Payment Methods -->
+                <div class="col-md-4">
+                    <h6 class="fw-bold">Follow Us</h6>
+                    <div class="social-icon">
+                        <a href="https://www.facebook.com/"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
+                        <a href="https://x.com/?lang=en"><i class="fab fa-x-twitter"></i></a>
+                        <a href="https://www.youtube.com/"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    <h6 class="fw-bold mt-4">Payment Methods</h6>
+                    <div class="row">
+                        <div class="col-3 text-center">
+                            <img src="./images/paypal.webp" alt="PayPal" width="70">
+                        </div>
+                        <div class="col-3 text-center">
+                            <img src="./images/visa.webp" alt="Visa" width="70">
+                        </div>
+                        <div class="col-3 text-center">
+                            <img src="./images/mastercard.webp" alt="MasterCard" width="70">
+                        </div>
+                        <div class="col-3 text-center">
+                            <img src="./images/tng.webp" alt="Touch 'n Go" width="60">
+                        </div>
+                        <div class="col-3 text-center">
+                            <img src="./images/grabpay.webp" alt="GrabPay" width="60">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright Section -->
+            <div class="mt-5 text-center">
+                <p>© Copyright 2025 WOU Tech Sdn. Bhd. All Rights Reserved | <a href="#">Privacy Policy</a> | <a
+                        href="#">Terms & Conditions</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Header Script -->
+    <script>
+        function updateHeader() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const typeId = parseInt(localStorage.getItem('type_id')) || 0;
+            const topHeader = document.getElementById('top-header');
+
+            if (isLoggedIn && typeId !== 3) {
+                topHeader.innerHTML = `
+                    <div class="navbar-brand"></div>
+                    <div class="d-flex align-items-center">
+                        <a class="btn btn-link text-white text-decoration-none me-3" type="button" id="cart-btn" href="./cart.html">
+                            <i class="fa-solid fa-cart-shopping"></i> Cart
+                        </a>
+                        <div class="dropdown">
+                            <button class="btn btn-link text-white text-decoration-none dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-user"></i> Profile
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                                <li><a class="dropdown-item" href="./profile.html">Profile Info</a></li>
+                                <li><a class="dropdown-item" href="./address.html">Address</a></li>
+                                <li><a class="dropdown-item" href="./order_tracking.html">Order Tracking</a></li>
+                                <li><a class="dropdown-item" href="./appointment_tracking.html">Appointment Tracking</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#" id="logout-btn">Log Out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('logout-btn').addEventListener('click', function (e) {
+                    e.preventDefault();
+                    localStorage.clear();
+                    updateHeader(); // Reset header to logged-out state
+                    window.location.href = 'index.html';
+                });
+            } else {
+                topHeader.innerHTML = `
+                    <button class="btn btn-link me-2 text-white text-decoration-none" type="button" onclick="window.location.href='login.html'">Login</button>
+                    <button class="btn btn-link text-white text-decoration-none" type="button" onclick="window.location.href='register.html'">Register</button>
+                `;
+            }
+        }
+
+        // Update header on page load
+        updateHeader();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Function to fetch and display appointments
+        async function fetchAppointments(userId) {
+            try {
+                const response = await fetch(`./php/fetch_appointments.php?user_id=${userId}`);
+                if (!response.ok) throw new Error('Network response was not ok');
+                const appointments = await response.json();
+
+                const tableBody = document.getElementById('appointmentTableBody');
+                tableBody.innerHTML = ''; // Clear existing rows
+
+                if (appointments.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="8" class="text-center">No appointments found.</td></tr>';
+                    return;
+                }
+
+                const serviceTypes = {
+                    1: 'E-Waste Recycling',
+                    2: 'PC Customization',
+                    3: 'Wiring Services'
+                };
+                const serviceMethods = {
+                    1: 'On-site Servicing',
+                    2: 'In-house Servicing'
+                };
+
+                let index = 0; // Initialize index for numbering
+                appointments.forEach(appointment => {
+                    index++; // Increment index for each appointment
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td><span class="item-number">${index}.</span></td>
+                        <td>${appointment.booking_id}</td>
+                        <td>${serviceTypes[appointment.service_type_id] || 'Unknown'}</td>
+                        <td>${serviceMethods[appointment.service_method_id] || 'Unknown'}</td>
+                        <td>${appointment.booking_date}</td>
+                        <td>${appointment.booking_time.replace(':00', '')}</td>
+                        <td>${appointment.book_address_1} ${appointment.book_address_2 ? ', ' + appointment.book_address_2 : ''}, ${appointment.book_city}, ${appointment.book_state}, ${appointment.book_country}</td>
+                        <td>
+                            <button class="btn btn-danger btn-sm cancel-btn" data-id="${appointment.booking_id}">Cancel</button>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+
+                // Add cancel button event listeners
+                document.querySelectorAll('.cancel-btn').forEach(button => {
+                    button.addEventListener('click', async function () {
+                        const bookingId = this.getAttribute('data-id');
+                        if (confirm('Are you sure you want to cancel this appointment?')) {
+                            await cancelAppointment(bookingId);
+                        }
+                    });
+                });
+            } catch (error) {
+                console.error('Error fetching appointments:', error);
+                document.getElementById('appointmentTableBody').innerHTML = '<tr><td colspan="8" class="text-center">Error loading appointments. Please try again.</td></tr>';
+            }
+        }
+
+        // Function to cancel an appointment
+        async function cancelAppointment(bookingId) {
+            try {
+                const response = await fetch(`./php/cancel_appointment.php?booking_id=${bookingId}`, {
+                    method: 'DELETE'
+                });
+                const data = await response.json();
+                if (data.success) {
+                    alert(data.message);
+                    fetchAppointments(parseInt(localStorage.getItem('user_id')) || 1); // Refresh the list
+                } else {
+                    alert(data.message);
+                }
+            } catch (error) {
+                console.error('Error canceling appointment:', error);
+                alert('An error occurred while canceling the appointment. Please try again.');
+            }
+        }
+
+        // Fetch appointments on page load
+        const userId = parseInt(localStorage.getItem('user_id'));
+        if (!userId) {
+            window.location.href = './login.html';
+            alert('Please Log In to enter this page');
+        } else {
+            fetchAppointments(userId);
+        }
+    </script>
+</body>
+
+</html>

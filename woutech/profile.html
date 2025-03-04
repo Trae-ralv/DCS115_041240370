@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - WOU Tech</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .profile-buttons {
+            display: none;
+        }
+    </style>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .hover-bg-body-secondary:hover {
+            background-color: #dee2e6 !important;
+        }
+
+        .hover-bg-body-secondary {
+            transition: background-color 0.3s ease;
+        }
+
+        .def-text-color {
+            color: #343a40;
+        }
+
+        .footer {
+            color: #000;
+            padding-top: 30px !important;
+        }
+
+        .footer a {
+            color: inherit;
+        }
+
+        @media (min-width:1024px) {
+            #profile-container {
+                margin: 2% 35% !important;
+                width: 30%;
+                padding: 1%;
+                border: 1px solid #ccc;
+                border-radius: 20px;
+            }
+
+            #mid-header {
+                margin: 0% 10%;
+                width: 80%;
+            }
+
+            #top-header {
+                margin: 0% 10%;
+                width: 80%;
+            }
+
+            .footer {
+                padding-left: 200px;
+                padding-right: 200px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <nav class="navbar bg-black">
+        <form class="container-fluid justify-content-end" id="top-header">
+        </form>
+    </nav>
+    <nav class="navbar navbar-expand-lg bg-body-secondary py-0">
+        <div class="container-fluid" id="mid-header">
+            <a class="navbar-brand justify-content-center" href="./index.html">
+                <img src="./images/logo.webp" alt="Logo" width="40" height="40"
+                    class="d-inline-block align-items-center me-3">
+                <a class="me-5 text-decoration-none fs-4 def-text-color" href="./index.html"><strong>WOU
+                        Tech</strong></a>
+            </a>
+            <button class="navbar-toggler border-0 bg-transparent" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="true"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-3 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height:full;">
+                    <li class="nav-item">
+                        <button type="button" class="py-3 px-3 border-0 bg-transparent hover-bg-body-secondary">
+                            <a class="nav-link" href="#"><strong>About Us</strong></a>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="py-3 px-3 border-0 bg-transparent hover-bg-body-secondary">
+                            <a class="nav-link" href="./product.html"><strong>Product</strong></a>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="py-3 px-3 border-0 bg-transparent hover-bg-body-secondary">
+                            <a class="nav-link" href="./service.html"><strong>Services</strong></a>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container mt-5" id="profile-container">
+        <div class="row justify-content-between">
+            <div class="col-4">
+                <h2>Profile Info</h2>
+            </div>
+            <div class="col-1">
+                <h3><i class="fa-solid fa-pen-to-square edit-icon" style="cursor: pointer;"></i></h3>
+            </div>
+        </div>
+        <form id="profile-form">
+            <div id="profile-fields"></div>
+            <div class="profile-buttons">
+                <button type="submit" class="btn btn-primary" id="profile-button">Save Changes</button>
+                <button type="button" class="btn btn-secondary cancel-button" id="profile-button">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    <footer class="footer py-4 bg-body-secondary">
+        <div class="container">
+            <div class="row ms-5">
+                <!-- Contact Section (Merged Email & Working Hours) -->
+                <div class="col-md-4">
+                    <h6 class="fw-bold">Contact</h6>
+                    <p>012 - 3456789<br>013 - 4578991<br>019 - 9867866</p>
+
+                    <h6 class="fw-bold mt-5">Email</h6>
+                    <p>contact@woutech.help.com</p>
+                </div>
+
+                <!-- Address Section -->
+                <div class="col-md-4">
+                    <h6 class="fw-bold">Address</h6>
+                    <p>7, Gat Lebuh China,<br>Taman Dhoby Ghaut,<br>10300 George Town,<br>Pulau Pinang</p>
+
+                    <h6 class="fw-bold mt-5">Working Hours</h6>
+                    <p>Mon-Fri: 9:00 am - 6:00 pm<br>Sat-Sun: 9:00 am - 3:00 pm</p>
+                </div>
+
+                <!-- Social Media & Payment Methods -->
+                <div class="col-md-4">
+                    <h6 class="fw-bold">Follow Us</h6>
+                    <a href="https://www.facebook.com/"><img src="./images/facebook.webp" alt="Facebook" width="35"
+                            class="me-3"></a>
+                    <a href="https://www.instagram.com/"><img src="./images/insta.webp" alt="Instagram" width="35"
+                            class="me-3"></a>
+                    <a href="https://x.com/?lang=en"><img src="./images/x.webp" alt="X" width="35" class="me-3"></a>
+                    <a href="https://www.youtube.com/"><img src="./images/youtube.webp" alt="YouTube" width="40"
+                            class="me-3"></a>
+
+                    <h6 class="fw-bold mt-4">We Accept</h6>
+                    <div class="row">
+                        <div class="col-3 text-center">
+                            <img src="./images/paypal.webp" alt="PayPal" width="70">
+                        </div>
+                        <div class="col-3 text-center">
+                            <img src="./images/visa.webp" alt="Visa" width="70">
+                        </div>
+                        <div class="col-3 text-center">
+                            <img src="./images/mastercard.webp" alt="MasterCard" width="70">
+                        </div>
+                        <div class="col-5 text-center mt-2">
+                            <img src="./images/tng.webp" alt="Touch 'n Go" width="60">
+                        </div>
+                        <div class="col-2 text-center mt-2">
+                            <img src="./images/grabpay.webp " alt="GrabPay" width="60">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright Section -->
+            <div class="mt-5 text-center">
+                <p>&copy; 2025 WOU Tech Sdn. Bhd. All Rights Reserved |
+                    <a href="#">Privacy Policy</a> |
+                    <a href="#">Terms & Regulations</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- header -->
+    <script>
+        function updateHeader() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const typeId = parseInt(localStorage.getItem('type_id')) || 0;
+            const topHeader = document.getElementById('top-header');
+
+            if (isLoggedIn && typeId !== 3) {
+                topHeader.innerHTML = `
+                    <div class="navbar-brand"></div>
+                    <div class="d-flex align-items-center">
+                        <a class="btn btn-link text-white text-decoration-none me-3" type="button" id="cart-btn" href="./cart.html">
+                            <i class="fa-solid fa-cart-shopping"></i> Cart
+                        </a>
+                        <div class="dropdown">
+                            <button class="btn btn-link text-white text-decoration-none dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-user"></i></i> Profile
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                                <li><a class="dropdown-item" href="./profile.html">Profile Info</a></li>
+                                <li><a class="dropdown-item" href="./address.html">Address</a></li>
+                                <li><a class="dropdown-item" href="./order_tracking.html">Order Tracking</a></li>
+                                <li><a class="dropdown-item" href./appointment_tracking.html">Appointment Tracking</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#" id="logout-btn">Log Out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('logout-btn').addEventListener('click', function (e) {
+                    e.preventDefault();
+                    localStorage.clear();
+                    updateHeader(); // Reset header to logged-out state
+                    window.location.href = 'index.html';
+                });
+            } else {
+                topHeader.innerHTML = `
+                    <button class="btn btn-link me-2 text-white text-decoration-none" type="button" onclick="window.location.href='login.html'">Login</button>
+                    <button class="btn btn-link text-white text-decoration-none" type="button" onclick="window.location.href='register.html'">Register</button>
+                `;
+            }
+        }
+
+        // Update header on page load
+        updateHeader();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const userId = localStorage.getItem('user_id');
+        const typeId = parseInt(localStorage.getItem('type_id'));
+
+        if (!userId || (typeId !== 1 && typeId !== 2)) {
+            window.location.href = 'login.html';
+        }
+        else {
+            fetch(`./php/profile_fetch.php?user_id=${userId}`)
+                .then(response => response.json())
+                .then(user => {
+                    const fieldsDiv = document.getElementById('profile-fields');
+                    fieldsDiv.innerHTML = `
+                    <div class="mb-3">
+                        <label class="form-label">Username</label>
+                        <input type="text" class="form-control" name="user_name" value="${user.user_name || ''}" required disabled>
+                    </div>
+                `;
+                    if (typeId === 1) {
+                        fieldsDiv.innerHTML += `
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" value="${user.email || ''}" required disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" name="password" value="${user.password || ''}" required disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Phone Number</label>
+                            <input type="text" class="form-control" name="phone_no" value="${user.phone_no || ''}" disabled>
+                        </div>
+                    `;
+                    } else if (typeId === 2) {
+                        fieldsDiv.innerHTML += `
+                        <div class="mb-3">
+                            <label class="form-label">Company Name</label>
+                            <input type="text" class="form-control" name="company_name" value="${user.company_name || ''}" required disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Company Email</label>
+                            <input type="email" class="form-control" name="email" value="${user.email || ''}" required disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" name="password" value="${user.password || ''}" required disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Company Phone Number</label>
+                            <input type="text" class="form-control" name="phone_no" value="${user.phone_no || ''}" disabled>
+                        </div>
+                    `;
+                    }
+
+                    // Add event listeners after DOM is populated
+                    const editIcon = document.querySelector('.edit-icon');
+                    const profileButtons = document.querySelector('.profile-buttons');
+                    const inputs = document.querySelectorAll('#profile-fields input');
+                    const cancelButton = document.querySelector('.cancel-button');
+
+                    editIcon.addEventListener('click', () => {
+                        profileButtons.style.display = 'block';
+                        inputs.forEach(input => input.disabled = false);
+                        editIcon.style.display = 'none';
+                    });
+
+                    cancelButton.addEventListener('click', () => {
+                        profileButtons.style.display = 'none';
+                        inputs.forEach(input => input.disabled = true);
+                        editIcon.style.display = 'block';
+                        // Optionally reset form to original values here
+                        location.reload(); // Simple way to reset to original values
+                    });
+                });
+        }
+
+        document.getElementById('profile-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            formData.append('user_id', userId);
+            const editIcon = document.querySelector('.edit-icon');
+
+            fetch('./php/profile_update.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Profile updated successfully!');
+                        document.querySelector('.profile-buttons').style.display = 'none';
+                        document.querySelectorAll('#profile-fields input').forEach(input => input.disabled = true);
+                        editIcon.style.display = 'block';
+                    } else {
+                        alert('Error updating profile: ' + (data.message || 'Unknown error'));
+                    }
+                });
+        });
+    </script>
+</body>
+
+</html>
