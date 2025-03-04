@@ -1,5 +1,3 @@
-# ReadMe.txt
-
 ## Project Title
 Your Project Name Here
 
