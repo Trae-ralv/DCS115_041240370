@@ -292,7 +292,7 @@ if (isset($_GET['email']) && isset($_GET['code'])) {
                         </div>
                         <div class="col-1"></div>
                         <div class="col-6 my-3">
-                            <form action="verify.php" method="POST">
+                            <form id="verificationForm">
                                 <div class="form-group">
                                     <input class="form-control" type="email" id="email" name="email" placeholder="Email"
                                         required>
@@ -313,6 +313,23 @@ if (isset($_GET['email']) && isset($_GET['code'])) {
                 </div>
             </div>
         </div>
+        <script>
+            $(document).ready(function () {
+                $('#verificationForm').on('submit', function (e) {
+                    e.preventDefault(); // Prevent default form submission
+
+                    // Get input values
+                    const email = encodeURIComponent($('#email').val());
+                    const verificationCode = encodeURIComponent($('#verificationCode').val());
+
+                    // Construct the URL
+                    const url = `http://localhost/woutech/php/verify.php?email=${email}&code=${verificationCode}`;
+
+                    // Navigate to the URL
+                    window.location.href = url;
+                });
+            });
+        </script>
     </body>
 
     </html>

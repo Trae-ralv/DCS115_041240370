@@ -409,7 +409,7 @@
         }
 
         // Function to fetch and calculate totals from localStorage
-        function updateTotals(userId = 1) {
+        function updateTotals() {
             try {
                 // Changed from 'grandTotal' to 'subtotal'
                 let subtotal = parseFloat(localStorage.getItem('subtotal')) || 0;
@@ -433,7 +433,6 @@
                 document.getElementById('grandTotalDisplay').textContent = formatCurrency(shippingFee);
             }
         }
-
         // Function to fetch and fill address
         async function fetchAddress(userId) {
             try {
@@ -451,7 +450,7 @@
 
                     if (activeTab === 'delivery' && address.state) {
                         shippingFee = calculateShippingFee(address.state);
-                        updateTotals(userId);
+                        updateTotals();
                     }
                 }
             } catch (error) {
@@ -601,8 +600,9 @@
         document.querySelector('input[name="paymentMethod"]:checked')?.closest('.payment-option')?.classList.add('selected');
 
         // Initial fetch and display
-        fetchAddress(1);
-        updateTotals(1);
+        const userId = localStorage.getItem('user_id');
+        fetchAddress(userId);
+        updateTotals();
     </script>
 </body>
 

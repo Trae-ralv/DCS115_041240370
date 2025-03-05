@@ -318,7 +318,55 @@
                 });
             }
 
-            // Rest of the functions (updateCartQuantity and deleteCartItem) remain unchanged...
+            function updateCartQuantity(userId, productId, quantity) {
+                $.ajax({
+                    url: './php/update_cart_quantity.php', // New PHP script for updating quantity
+                    type: 'POST',
+                    data: {
+                        user_id: userId,
+                        product_id: productId,
+                        quantity: quantity
+                    },
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.success) {
+                            loadCart(); // Refresh the cart to reflect the updated quantities
+                        } else {
+                            alert('Error updating quantity: ' + response.message);
+                            loadCart(); // Refresh to revert to the previous state
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert('Error updating quantity: ' + error);
+                        loadCart(); // Refresh to revert to the previous state
+                    }
+                });
+            }
+            
+            function deleteCartItem(userId, productId) {
+                $.ajax({
+                    url: './php/delete_cart_item.php', // New PHP script for deleting cart items
+                    type: 'POST',
+                    data: {
+                        user_id: userId,
+                        product_id: productId
+                    },
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.success) {
+                            alert('Item deleted from cart successfully!');
+                            loadCart(); // Refresh the cart to reflect the deletion
+                        } else {
+                            alert('Error deleting item: ' + response.message);
+                            loadCart(); // Refresh to revert to the previous state
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert('Error deleting item: ' + error);
+                        loadCart(); // Refresh to revert to the previous state
+                    }
+                });
+            }
 
             // Load cart on page load
             loadCart();
