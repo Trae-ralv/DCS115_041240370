@@ -1,5 +1,5 @@
 ## Project Title
-Your Project Name Here
+PC E-Commerce Website
 
 ## Description
 This project is an e-commerce website created for studying purposes. It is not intended for commercial use. The project includes three types of user accounts: personal, business, and admin. It was built within seven days, so it is not designed to be responsive. The primary goal of this project is to learn how to use backend development in website projects.
